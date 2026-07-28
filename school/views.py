@@ -34,6 +34,19 @@ def staff_required(view_func):
 
 def home_view(request):
     settings = WebsiteSetting.load()
+    
+    # Self-healing: Migrates legacy iframe HTML to sanitized URL in the database
+    if settings.map_iframe and '<iframe' in settings.map_iframe:
+        import re
+        import html
+        match = re.search(r'src="([^"]+)"', settings.map_iframe)
+        if match:
+            cleaned_url = html.unescape(match.group(1).strip('"\'').strip())
+            # Double check it is a google maps URL before saving
+            if 'google.' in cleaned_url and '/maps/' in cleaned_url:
+                settings.map_iframe = cleaned_url
+                settings.save()
+                
     about = AboutSection.load()
     highlights = AcademicHighlight.objects.all()
     achievements = Achievement.objects.all()
