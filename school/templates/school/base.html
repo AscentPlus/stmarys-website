@@ -1,0 +1,164 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ settings.school_name }} | {{ settings.school_motto }}</title>
+    
+    <!-- Meta Tags for SEO -->
+    <meta name="description" content="Welcome to {{ settings.school_name }}. {{ settings.hero_heading }}. A nurturing and caring Lower Primary educational institution.">
+    <meta name="keywords" content="primary school, lp school, education, elementary school, childhood education, school website">
+    
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+<body>
+
+    <!-- Top Contact Bar -->
+    <div class="top-bar">
+        <div class="top-bar-container">
+            <div class="top-bar-contacts">
+                <span class="top-bar-contact-item"><i class="fa-solid fa-phone"></i> {{ settings.phone }}</span>
+                <span class="top-bar-contact-item"><i class="fa-solid fa-envelope"></i> {{ settings.email }}</span>
+            </div>
+            <div class="top-bar-socials">
+                <span>Follow Us:</span>
+                {% if settings.social_facebook %}
+                    <a href="{{ settings.social_facebook }}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f"></i></a>
+                {% endif %}
+                {% if settings.social_instagram %}
+                    <a href="{{ settings.social_instagram }}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a>
+                {% endif %}
+                {% if settings.social_youtube %}
+                    <a href="{{ settings.social_youtube }}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-youtube"></i></a>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Transparent Sticky Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-container">
+            <a href="#home" class="logo-container">
+                {% if settings.logo %}
+                    <img src="{{ settings.logo.url }}" alt="{{ settings.school_name }} Logo" class="logo-img">
+                {% else %}
+                    <div class="logo-img" style="background-color: var(--color-accent); display:flex; align-items:center; justify-content:center;">
+                        <i class="fa-solid fa-school" style="color: var(--color-primary); font-size:1.5rem;"></i>
+                    </div>
+                {% endif %}
+                <div class="logo-text">
+                    {{ settings.school_name }}
+                    <span class="logo-subtext">{{ settings.school_motto }}</span>
+                </div>
+            </a>
+            
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="#home" class="nav-link active">Home</a></li>
+                <li class="nav-item"><a href="#about" class="nav-link">About Us</a></li>
+                <li class="nav-item"><a href="#events" class="nav-link">Events</a></li>
+                <li class="nav-item"><a href="#announcements" class="nav-link">Announcements</a></li>
+                <li class="nav-item"><a href="#gallery" class="nav-link">Gallery</a></li>
+                <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content Block -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Lightbox Modal for Albums and Event Photos -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-container">
+            <button class="lightbox-close" aria-label="Close lightbox">&times;</button>
+            <div class="lightbox-content">
+                <button class="lightbox-nav lightbox-prev" aria-label="Previous photo"><i class="fa-solid fa-chevron-left"></i></button>
+                <img src="" alt="" class="lightbox-img">
+                <button class="lightbox-nav lightbox-next" aria-label="Next photo"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+            <div class="lightbox-caption"></div>
+            <!-- Thumbnails strip -->
+            <div class="lightbox-thumbnails"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <!-- Brand Column -->
+            <div class="footer-logo-panel">
+                <div class="logo-text" style="color: var(--color-white); font-weight:700;">
+                    {{ settings.school_name }}
+                </div>
+                <p class="footer-motto">{{ settings.school_motto }}</p>
+                <div class="contact-socials">
+                    {% if settings.social_facebook %}
+                        <a href="{{ settings.social_facebook }}" class="social-icon-btn" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    {% endif %}
+                    {% if settings.social_instagram %}
+                        <a href="{{ settings.social_instagram }}" class="social-icon-btn" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    {% endif %}
+                    {% if settings.social_youtube %}
+                        <a href="{{ settings.social_youtube }}" class="social-icon-btn" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                    {% endif %}
+
+                </div>
+            </div>
+            
+            <!-- Quick Links -->
+            <div class="footer-links-panel">
+                <h4 class="footer-title">Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#home" class="footer-link">Home</a></li>
+                    <li><a href="#about" class="footer-link">About Us</a></li>
+                    <li><a href="#events" class="footer-link">School Activities</a></li>
+                    <li><a href="#announcements" class="footer-link">Announcements</a></li>
+                    <li><a href="#gallery" class="footer-link">Gallery Album</a></li>
+                    <li><a href="#contact" class="footer-link">Get In Touch</a></li>
+                </ul>
+            </div>
+            
+            <!-- Contact Details -->
+            <div class="footer-contact-panel">
+                <h4 class="footer-title">Contact Us</h4>
+                <ul class="footer-contact-info">
+                    <li class="footer-contact-item">
+                        <i class="fa-solid fa-location-dot footer-contact-icon"></i>
+                        <span>{{ settings.address|linebreaksbr }}</span>
+                    </li>
+                    <li class="footer-contact-item">
+                        <i class="fa-solid fa-phone footer-contact-icon"></i>
+                        <span>{{ settings.phone }}</span>
+                    </li>
+                    <li class="footer-contact-item">
+                        <i class="fa-solid fa-envelope footer-contact-icon"></i>
+                        <span>{{ settings.email }}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; {% now "Y" %} {{ settings.school_name }}. All Rights Reserved.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.85; letter-spacing: 0.5px;">Designed by <a href="https://www.ascentplus.net" target="_blank" rel="noopener noreferrer" style="color: var(--color-accent); font-weight: 600; text-decoration: none;">Ascent Plus</a></p>
+        </div>
+    </footer>
+
+    <!-- Main JavaScript -->
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

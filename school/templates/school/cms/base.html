@@ -1,0 +1,142 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel Dashboard</title>
+    
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    
+    <!-- CMS Custom Stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/cms.css' %}">
+    
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+    <div class="cms-wrapper">
+        <!-- Sidebar Navigation -->
+        <aside class="cms-sidebar" id="cmsSidebar">
+            <div class="cms-brand">
+                {% if settings.logo %}
+                    <img src="{{ settings.logo.url }}" alt="School Logo" class="cms-brand-logo">
+                {% else %}
+                    <div class="cms-brand-logo" style="background-color: var(--color-accent); display:flex; align-items:center; justify-content:center;">
+                        <i class="fa-solid fa-school" style="color: var(--color-primary); font-size:1.1rem;"></i>
+                    </div>
+                {% endif %}
+                <div class="cms-brand-name">
+                    <h3>Admin Panel</h3>
+                </div>
+                <!-- Mobile sidebar close toggle -->
+                <button class="cms-sidebar-close" id="sidebarClose" aria-label="Close sidebar menu">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <ul class="cms-nav-list">
+                <li class="cms-nav-item {% if current_page == 'dashboard' %}active{% endif %}">
+                    <a href="{% url 'cms_dashboard' %}"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+                </li>
+                <li class="cms-nav-item {% if current_page == 'about' %}active{% endif %}">
+                    <a href="{% url 'cms_edit_about' %}"><i class="fa-solid fa-address-card"></i> About Us</a>
+                </li>
+                <li class="cms-nav-item {% if current_page == 'events' %}active{% endif %}">
+                    <a href="{% url 'cms_manage_events' %}"><i class="fa-solid fa-calendar-days"></i> Events</a>
+                </li>
+                <li class="cms-nav-item {% if current_page == 'announcements' %}active{% endif %}">
+                    <a href="{% url 'cms_manage_announcements' %}"><i class="fa-solid fa-bullhorn"></i> Announcements</a>
+                </li>
+                <li class="cms-nav-item {% if current_page == 'gallery' %}active{% endif %}">
+                    <a href="{% url 'cms_manage_gallery' %}"><i class="fa-solid fa-images"></i> Gallery</a>
+                </li>
+                <li class="cms-nav-item {% if current_page == 'messages' %}active{% endif %}">
+                    <a href="{% url 'cms_view_messages' %}"><i class="fa-solid fa-envelope"></i> Inbox</a>
+                </li>
+                <li class="cms-nav-item {% if current_page == 'settings' %}active{% endif %}">
+                    <a href="{% url 'cms_edit_settings' %}"><i class="fa-solid fa-sliders"></i> Settings</a>
+                </li>
+            </ul>
+            
+            <div class="cms-footer-nav">
+                <a href="{% url 'home' %}" target="_blank" rel="noopener noreferrer" style="display:flex; align-items:center; gap:1rem; padding:0.85rem 1.25rem; color:var(--color-lavender);"><i class="fa-solid fa-globe"></i> View Website</a>
+                <a href="{% url 'cms_logout' %}" class="cms-logout-btn" data-confirm="Are you sure you want to log out?"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</a>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="cms-main">
+            <!-- Header container -->
+            <div class="cms-header-container">
+                <!-- Mobile Navigation Top Bar -->
+                <div class="cms-header">
+                    <!-- Hamburger for mobile screens -->
+                    <button id="sidebarToggle" class="sidebar-toggle" style="display:none; background:transparent; border:none; color:var(--color-primary-dark); font-size:1.8rem; cursor:pointer;" aria-label="Toggle sidebar menu">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    
+                    <div class="cms-user-panel">
+                        <span class="cms-avatar">{{ user.username|slice:":1"|upper }}</span>
+                        <div>
+                            <strong style="display:block; font-size:0.9rem; line-height: 1.2;">{{ user.get_full_name|default:user.username }}</strong>
+                            <div style="display: flex; gap: 0.6rem; margin-top: 0.2rem; align-items: center;">
+                                <a href="{% url 'cms_change_password' %}" style="display: inline-flex; align-items: center; gap: 0.25rem; font-size:0.75rem; color:var(--color-primary); font-weight:600; white-space: nowrap;">
+                                    <i class="fa-solid fa-key" style="font-size: 0.7rem;"></i> <span class="cms-user-btn-text">Password</span>
+                                </a>
+                                <span class="cms-user-btn-text" style="font-size:0.75rem; color:var(--color-text-muted);">|</span>
+                                <a href="{% url 'cms_logout' %}" style="display: inline-flex; align-items: center; gap: 0.25rem; font-size:0.75rem; color:var(--color-secondary); font-weight:600; white-space: nowrap;" data-confirm="Are you sure you want to log out?">
+                                    <i class="fa-solid fa-arrow-right-from-bracket" style="font-size: 0.7rem;"></i> <span class="cms-user-btn-text">Log Out</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page Title (Scrolls with page content) -->
+                <div class="cms-title">
+                    {% block cms_title %}
+                        <h1>Dashboard</h1>
+                        <p>Quick glance at school updates.</p>
+                    {% endblock %}
+                </div>
+            </div>
+
+            <!-- Messages toast announcements -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="cms-alert cms-alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}">
+                        <span>{{ message }}</span>
+                        <button class="cms-alert-close" onclick="this.parentElement.style.display='none';">&times;</button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <!-- Main block content -->
+            {% block cms_content %}
+            {% endblock %}
+        </main>
+    </div>
+
+    <!-- Custom Confirmation Modal -->
+    <div class="cms-modal" id="cmsConfirmModal">
+        <div class="cms-modal-box" style="max-width: 400px; text-align: center; border-radius: var(--border-radius-md); overflow: hidden;">
+            <div class="cms-modal-header" style="background-color: var(--color-primary-dark); justify-content: center; padding: 1.25rem;">
+                <h3 style="color: var(--color-white); font-size: 1.15rem; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-triangle-exclamation" style="color: var(--color-accent);"></i> Confirm Action</h3>
+            </div>
+            <div class="cms-modal-body" style="padding: 2rem;">
+                <p id="cmsConfirmMessage" style="font-size: 0.95rem; color: var(--color-text-dark); margin-bottom: 2rem; line-height: 1.5;"></p>
+                <div style="display: flex; justify-content: center; gap: 1rem;">
+                    <button type="button" class="cms-btn cms-btn-outline" id="cmsConfirmCancelBtn" style="padding: 0.6rem 1.5rem; min-width: 100px; justify-content: center;">Cancel</button>
+                    <a href="#" class="cms-btn cms-btn-secondary" id="cmsConfirmConfirmBtn" style="padding: 0.6rem 1.5rem; min-width: 100px; justify-content: center;">Confirm</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CMS JS script -->
+    <script src="{% static 'js/cms.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

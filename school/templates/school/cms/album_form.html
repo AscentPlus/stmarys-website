@@ -1,0 +1,94 @@
+{% extends 'school/cms/base.html' %}
+{% load static %}
+
+{% block cms_title %}
+    <h1>{{ action }} Album</h1>
+    <p>{% if action == 'Add' %}Create a new school photo album.{% else %}Edit details and add/delete photos for the album '{{ form.instance.title }}'.{% endif %}</p>
+{% endblock %}
+
+{% block cms_content %}
+
+<div class="cms-card">
+    <form method="POST" enctype="multipart/form-data" class="cms-form">
+        {% csrf_token %}
+        
+        <div class="form-row">
+            <div class="form-group" style="grid-column: span 2;">
+                <label for="{{ form.title.id_for_label }}">Album Title</label>
+                {{ form.title }}
+            </div>
+        </div>
+        
+        <div class="form-row" style="margin-top: 1rem;">
+            <div class="form-group">
+                <label for="{{ form.date.id_for_label }}">Album Date / Occurrence</label>
+                {{ form.date }}
+            </div>
+        </div>
+        
+        <div class="form-row" style="margin-top: 1rem;">
+            <div class="form-group" style="grid-column: span 2;">
+                <label for="{{ form.description.id_for_label }}">Album Description</label>
+                {{ form.description }}
+            </div>
+        </div>
+        
+        <div class="form-row" style="margin-top: 1rem;">
+            <!-- Cover Photo Upload -->
+            <div class="form-group">
+                <label>Main Album Cover Image</label>
+                <div class="image-preview-container">
+                    {% if form.instance.cover_image %}
+                        <img src="{{ form.instance.cover_image.url }}" class="image-preview-thumbnail" alt="Current Cover">
+                    {% else %}
+                        <div class="image-preview-thumbnail" style="display:flex; align-items:center; justify-content:center; background:#fff;"><i class="fa-solid fa-image" style="color:var(--color-primary); font-size:1.5rem;"></i></div>
+                    {% endif %}
+                    <div class="image-preview-info">
+                        {{ form.cover_image }}
+                        <span class="help-text">This will be the preview cover image on the main website. Size: 800x800px.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Additional Photos Multiple Upload -->
+            <div class="form-group">
+                <label for="id_album_photos">Upload Album Photos</label>
+                <div class="image-preview-container" style="height:100%; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; min-height: 110px;">
+                    <input type="file" name="album_photos" id="id_album_photos" class="form-control-file" multiple>
+                    <span class="help-text" style="margin-top:0.5rem;">Choose one or more image files to bulk-add to this album.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- In Edit Mode: Show Existing Album Photos with delete buttons -->
+        {% if action == 'Edit' and album.photos.all %}
+        <div style="border-top: 1.5px solid var(--color-bg-body); padding-top: 1.5rem; margin-top: 1.5rem;">
+            <h4 style="font-size:1.05rem; color:var(--color-primary); margin-bottom:1rem;"><i class="fa-solid fa-images"></i> Photos in this Album ({{ album.photos.all|length }})</h4>
+            
+            <div class="upload-grid">
+                {% for photo in album.photos.all %}
+                <div class="upload-thumb-card">
+                    <img src="{{ photo.image.url }}" alt="Album photo">
+                    <form action="{% url 'cms_delete_gallery_photo' photo.id %}" method="POST" style="position: absolute; top: 5px; right: 5px; margin: 0; padding: 0;">
+                        {% csrf_token %}
+                        <button type="submit" class="upload-thumb-delete" data-confirm="Are you sure you want to delete this image from the album?" title="Delete photo" style="position: static;">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- Action Buttons -->
+        <div style="margin-top: 3rem; display:flex; justify-content:flex-end; gap:1rem;">
+            <a href="{% url 'cms_manage_gallery' %}" class="cms-btn cms-btn-outline">Cancel</a>
+            <button type="submit" class="cms-btn cms-btn-primary">
+                {{ action }} Album <i class="fa-solid fa-save"></i>
+            </button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

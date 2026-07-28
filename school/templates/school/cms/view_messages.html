@@ -1,0 +1,73 @@
+{% extends 'school/cms/base.html' %}
+{% load static %}
+
+{% block cms_title %}
+    <h1>Parent Inquiries Inbox</h1>
+    <p>View and manage contact form submissions sent by website visitors.</p>
+{% endblock %}
+
+{% block cms_content %}
+
+<div class="cms-card">
+    <div class="cms-card-header">
+        <h3 class="cms-card-title">Received Inquiry Messages</h3>
+    </div>
+    
+    <div class="cms-table-responsive">
+        <table class="cms-table">
+            <thead>
+                <tr>
+                    <th style="width:180px;">Sender</th>
+                    <th style="width:160px;">Contact Details</th>
+                    <th>Subject</th>
+                    <th style="width:160px;">Date Received</th>
+                    <th style="width:100px;">Status</th>
+                    <th style="width:120px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for msg in contact_messages %}
+                <tr style="{% if not msg.is_read %}font-weight: 600; background-color: rgba(92, 45, 145, 0.01);{% endif %}">
+                    <td>
+                        <strong style="color: var(--color-primary-dark);">{{ msg.name }}</strong>
+                    </td>
+                    <td style="font-size:0.85rem;">
+                        <div style="margin-bottom:0.15rem;"><i class="fa-solid fa-envelope" style="color:var(--color-primary-light);"></i> {{ msg.email }}</div>
+                        {% if msg.phone %}<div><i class="fa-solid fa-phone" style="color:var(--color-primary-light);"></i> {{ msg.phone }}</div>{% endif %}
+                    </td>
+                    <td>
+                        {{ msg.subject }}
+                        <p style="font-weight:normal; font-size:0.8rem; color:var(--color-text-muted); margin-top:0.25rem;">
+                            {{ msg.message|truncatechars:70 }}
+                        </p>
+                    </td>
+                    <td>{{ msg.created_at|date:"M d, Y H:i" }}</td>
+                    <td>
+                        {% if msg.is_read %}
+                            <span class="badge badge-success">Read</span>
+                        {% else %}
+                            <span class="badge badge-danger">Unread</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="action-links">
+                            <a href="{% url 'cms_read_message' msg.id %}" class="action-btn action-edit" title="Read full message"><i class="fa-solid fa-eye"></i></a>
+                             <form action="{% url 'cms_delete_message' msg.id %}" method="POST" style="display: inline;">
+                                 {% csrf_token %}
+                                 <button type="submit" class="action-btn action-delete" data-confirm="Are you sure you want to permanently delete this message?" title="Delete message"><i class="fa-solid fa-trash"></i></button>
+                             </form>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" style="text-align: center; color: var(--color-text-muted); padding:3rem;">Your inbox is empty. No inquiries received.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% include 'school/cms/pagination.html' with page_obj=contact_messages %}
+</div>
+
+{% endblock %}

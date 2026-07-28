@@ -1,0 +1,88 @@
+{% extends 'school/cms/base.html' %}
+{% load static %}
+
+{% block cms_title %}
+    <h1>Manage Announcements</h1>
+    <p>Write circulars, news updates, and school notices. Pinned notices appear at the top.</p>
+{% endblock %}
+
+{% block cms_content %}
+
+<div class="cms-card">
+    <div class="cms-card-header">
+        <h3 class="cms-card-title">School Notices & Circulars Directory</h3>
+        <a href="{% url 'cms_add_announcement' %}" class="cms-btn cms-btn-primary cms-btn-sm"><i class="fa-solid fa-plus"></i> Write Announcement</a>
+    </div>
+    
+    <div class="cms-table-responsive">
+        <table class="cms-table">
+            <thead>
+                <tr>
+                    <th style="width:180px;">Category</th>
+                    <th>Title</th>
+                    <th style="width:140px;">Date Issued</th>
+                    <th style="width:100px;">Pinned</th>
+                    <th style="width:100px;">Status</th>
+                    <th style="width:120px;">Attachment</th>
+                    <th style="width:120px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in announcements %}
+                <tr>
+                    <td>
+                        <span class="badge 
+                            {% if item.category == 'news' %}badge-success
+                            {% elif item.category == 'circular' %}badge-danger
+                            {% else %}badge-info{% endif %}">
+                            {{ item.get_category_display }}
+                        </span>
+                    </td>
+                    <td>
+                        <strong style="font-size:1.05rem;">{{ item.title }}</strong>
+                        <p style="font-size:0.8rem; color:var(--color-text-muted); margin-top:0.25rem;">{{ item.description|truncatechars:80 }}</p>
+                    </td>
+                    <td>{{ item.date|date:"M d, Y" }}</td>
+                    <td>
+                        {% if item.is_pinned %}
+                            <span class="badge badge-success" style="background-color: var(--color-secondary); color:#fff;"><i class="fa-solid fa-thumbtack"></i> Yes</span>
+                        {% else %}
+                            <span style="color:var(--color-text-muted); font-size:0.9rem;">No</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if item.is_published %}
+                            <span class="badge badge-success">Published</span>
+                        {% else %}
+                            <span class="badge badge-danger">Draft</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if item.pdf_file %}
+                            <a href="{{ item.pdf_file.url }}" target="_blank" rel="noopener noreferrer" style="color: var(--color-secondary); font-size:1.1rem;" title="View PDF"><i class="fa-solid fa-file-pdf"></i> PDF</a>
+                        {% else %}
+                            <span style="color:var(--color-text-muted); font-size:0.85rem;">None</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="action-links">
+                            <a href="{% url 'cms_edit_announcement' item.id %}" class="action-btn action-edit" title="Edit announcement"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <form action="{% url 'cms_delete_announcement' item.id %}" method="POST" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="action-btn action-delete" data-confirm="Are you sure you want to delete this announcement?" title="Delete announcement"><i class="fa-solid fa-trash"></i></button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" style="text-align: center; color: var(--color-text-muted); padding:3rem;">No announcements created yet. Add one above!</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% include 'school/cms/pagination.html' with page_obj=announcements %}
+</div>
+
+{% endblock %}

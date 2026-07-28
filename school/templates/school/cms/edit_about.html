@@ -1,0 +1,516 @@
+{% extends 'school/cms/base.html' %}
+{% load static %}
+
+{% block cms_title %}
+    <h1>About Us Section</h1>
+    <p>Manage introduction, principal messages, highlights and school facilities.</p>
+{% endblock %}
+
+{% block cms_content %}
+
+<!-- CMS Tabs -->
+<div class="cms-tabs">
+    <div class="cms-tab active" data-tab="tabAbout">Core About Us Content</div>
+    <div class="cms-tab" data-tab="tabHighlights">Academic Highlights</div>
+    <div class="cms-tab" data-tab="tabAchievements">Achievements & Milestones</div>
+    <div class="cms-tab" data-tab="tabFacilities">Facilities</div>
+</div>
+
+<!-- ==========================================
+     TAB 1: CORE ABOUT CONTENT
+     ========================================== -->
+<div class="cms-tab-content active" id="tabAbout">
+    <div class="cms-card">
+        <form method="POST" enctype="multipart/form-data" class="cms-form">
+            {% csrf_token %}
+            <input type="hidden" name="about_submit" value="1">
+            
+            <!-- Intro Text & Image -->
+            <div style="border-bottom: 1.5px solid var(--color-bg-body); padding-bottom: 2rem; margin-bottom: 2rem;">
+                <h3 style="font-size: 1.25rem; color: var(--color-primary); margin-bottom: 1.5rem;"><i class="fa-solid fa-graduation-cap"></i> School Introduction</h3>
+                <div class="form-row">
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label for="{{ form.intro_title.id_for_label }}">Introduction Title</label>
+                        {{ form.intro_title }}
+                        {% if form.intro_title.errors %}
+                            <span class="field-error" style="color:var(--color-secondary); font-size:0.8rem; margin-top:0.25rem; font-weight:600; display:block;">{{ form.intro_title.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-row" style="margin-top: 1.5rem;">
+                    <div class="form-group">
+                        <label for="{{ form.intro_content.id_for_label }}">Introduction Text Content</label>
+                        {{ form.intro_content }}
+                        {% if form.intro_content.errors %}
+                            <span class="field-error" style="color:var(--color-secondary); font-size:0.8rem; margin-top:0.25rem; font-weight:600; display:block;">{{ form.intro_content.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label>Introduction Photograph</label>
+                        <div class="image-preview-container" style="height: calc(100% - 24px); min-height: 140px; display: flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+                            {% if about.intro_image %}
+                                <img src="{{ about.intro_image.url }}" class="image-preview-thumbnail" style="width: 120px; height: 90px; margin-bottom: 0.5rem;" alt="Introduction Image">
+                            {% endif %}
+                            {{ form.intro_image }}
+                            {% if form.intro_image.errors %}
+                                <span class="field-error" style="color:var(--color-secondary); font-size:0.8rem; margin-top:0.25rem; font-weight:600; display:block;">{{ form.intro_image.errors.0 }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Principal's Message -->
+            <div style="border-bottom: 1.5px solid var(--color-bg-body); padding-bottom: 2rem; margin-bottom: 2rem;">
+                <h3 style="font-size: 1.25rem; color: var(--color-primary); margin-bottom: 1.5rem;"><i class="fa-solid fa-user-tie"></i> Principal's Message</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="{{ form.principal_title.id_for_label }}">Principal Message Title</label>
+                        {{ form.principal_title }}
+                        {% if form.principal_title.errors %}
+                            <span class="field-error" style="color:var(--color-secondary); font-size:0.8rem; margin-top:0.25rem; font-weight:600; display:block;">{{ form.principal_title.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.principal_name.id_for_label }}">Principal Full Name</label>
+                        {{ form.principal_name }}
+                        {% if form.principal_name.errors %}
+                            <span class="field-error" style="color:var(--color-secondary); font-size:0.8rem; margin-top:0.25rem; font-weight:600; display:block;">{{ form.principal_name.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="form-row" style="margin-top: 1.5rem;">
+                    <div class="form-group">
+                        <label for="{{ form.principal_message.id_for_label }}">Message Body</label>
+                        {{ form.principal_message }}
+                        {% if form.principal_message.errors %}
+                            <span class="field-error" style="color:var(--color-secondary); font-size:0.8rem; margin-top:0.25rem; font-weight:600; display:block;">{{ form.principal_message.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label>Principal Photograph</label>
+                        <div class="image-preview-container" style="height: calc(100% - 24px); min-height: 140px; display: flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+                            {% if about.principal_image %}
+                                <img src="{{ about.principal_image.url }}" class="image-preview-thumbnail" style="width: 90px; height: 110px; margin-bottom: 0.5rem;" alt="Principal Image">
+                            {% endif %}
+                            {{ form.principal_image }}
+                            {% if form.principal_image.errors %}
+                                <span class="field-error" style="color:var(--color-secondary); font-size:0.8rem; margin-top:0.25rem; font-weight:600; display:block;">{{ form.principal_image.errors.0 }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row" style="margin-top: 1.5rem;">
+                    <div class="form-group">
+                        <label for="{{ form.principal_signature.id_for_label }}">Principal Signature Label</label>
+                        {{ form.principal_signature }}
+                        {% if form.principal_signature.errors %}
+                            <span class="field-error" style="color:var(--color-secondary); font-size:0.8rem; margin-top:0.25rem; font-weight:600; display:block;">{{ form.principal_signature.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Parallax Quote -->
+            <div>
+                <h3 style="font-size: 1.25rem; color: var(--color-primary); margin-bottom: 1.5rem;"><i class="fa-solid fa-quote-left"></i> Fixed Parallax Background Banner</h3>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="{{ form.parallax_text.id_for_label }}">Parallax Quote / Motto Text</label>
+                        {{ form.parallax_text }}
+                        {% if form.parallax_text.errors %}
+                            <span class="field-error" style="color:var(--color-secondary); font-size:0.8rem; margin-top:0.25rem; font-weight:600; display:block;">{{ form.parallax_text.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label>Parallax Background Image</label>
+                        <div class="image-preview-container" style="height: calc(100% - 24px); min-height: 110px; display: flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+                            {% if about.parallax_bg %}
+                                <img src="{{ about.parallax_bg.url }}" class="image-preview-thumbnail" style="width: 150px; height: 70px; margin-bottom: 0.5rem;" alt="Parallax BG">
+                            {% endif %}
+                            {{ form.parallax_bg }}
+                            {% if form.parallax_bg.errors %}
+                                <span class="field-error" style="color:var(--color-secondary); font-size:0.8rem; margin-top:0.25rem; font-weight:600; display:block;">{{ form.parallax_bg.errors.0 }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 2rem; display:flex; justify-content:flex-end;">
+                <button type="submit" class="cms-btn cms-btn-primary" style="padding: 0.85rem 2rem;">
+                    Save Core About Us Content <i class="fa-solid fa-save"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ==========================================
+     TAB 2: ACADEMIC HIGHLIGHTS
+     ========================================== -->
+<div class="cms-tab-content" id="tabHighlights">
+    <div class="cms-card">
+        <div class="cms-card-header">
+            <h3 class="cms-card-title">Academic Highlights Cards</h3>
+            <button id="addHighlightBtn" data-action-url="{% url 'cms_add_highlight' %}" class="cms-btn cms-btn-primary cms-btn-sm"><i class="fa-solid fa-plus"></i> Add Highlight</button>
+        </div>
+        
+        <div class="cms-table-responsive">
+            <table class="cms-table">
+                <thead>
+                    <tr>
+                        <th style="width:80px;">Icon</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th style="width:100px;">Sort Order</th>
+                        <th style="width:120px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in highlights %}
+                    <tr>
+                        <td>
+                            <div style="width:36px; height:36px; border-radius:50%; background:var(--color-lavender); display:flex; align-items:center; justify-content:center; color:var(--color-primary);">
+                                {% if item.icon_class == 'book' %}<i class="fa-solid fa-book-open-reader"></i>
+                                {% elif item.icon_class == 'palette' %}<i class="fa-solid fa-palette"></i>
+                                {% elif item.icon_class == 'heart' %}<i class="fa-solid fa-heart-pulse"></i>
+                                {% elif item.icon_class == 'sports' %}<i class="fa-solid fa-child-reaching"></i>
+                                {% elif item.icon_class == 'globe' %}<i class="fa-solid fa-globe"></i>
+                                {% elif item.icon_class == 'star' %}<i class="fa-solid fa-star"></i>
+                                {% elif item.icon_class == 'music' %}<i class="fa-solid fa-music"></i>
+                                {% else %}<i class="fa-solid fa-star"></i>{% endif %}
+                            </div>
+                        </td>
+                        <td><strong>{{ item.title }}</strong></td>
+                        <td>{{ item.description }}</td>
+                        <td>{{ item.order }}</td>
+                        <td>
+                            <div class="action-links">
+                                <button class="action-btn action-edit edit-highlight-btn" 
+                                        data-action-url="{% url 'cms_edit_highlight' item.id %}"
+                                        data-title="{{ item.title }}"
+                                        data-description="{{ item.description }}"
+                                        data-icon="{{ item.icon_class }}"
+                                        data-order="{{ item.order }}"
+                                        style="border:none; cursor:pointer;"
+                                        title="Edit highlight">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                                <form action="{% url 'cms_delete_highlight' item.id %}" method="POST" style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="action-btn action-delete" data-confirm="Are you sure you want to delete this highlight?" title="Delete highlight"><i class="fa-solid fa-trash"></i></button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" style="text-align: center; color: var(--color-text-muted); padding:2rem;">No highlights added. Add one above!</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ==========================================
+     TAB 3: ACHIEVEMENTS & MILESTONES
+     ========================================== -->
+<div class="cms-tab-content" id="tabAchievements">
+    <div class="cms-card">
+        <div class="cms-card-header">
+            <h3 class="cms-card-title">Achievements Cards</h3>
+            <button id="addAchievementBtn" data-action-url="{% url 'cms_add_achievement' %}" class="cms-btn cms-btn-primary cms-btn-sm"><i class="fa-solid fa-plus"></i> Add Achievement</button>
+        </div>
+        
+        <div class="cms-table-responsive">
+            <table class="cms-table">
+                <thead>
+                    <tr>
+                        <th style="width:120px;">Stat Value</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th style="width:100px;">Sort Order</th>
+                        <th style="width:120px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in achievements %}
+                    <tr>
+                        <td><span class="badge badge-info" style="font-size:0.9rem; padding: 0.4rem 0.8rem;">{{ item.value }}</span></td>
+                        <td><strong>{{ item.title }}</strong></td>
+                        <td>{{ item.description }}</td>
+                        <td>{{ item.order }}</td>
+                        <td>
+                            <div class="action-links">
+                                <button class="action-btn action-edit edit-achievement-btn" 
+                                        data-action-url="{% url 'cms_edit_achievement' item.id %}"
+                                        data-title="{{ item.title }}"
+                                        data-value="{{ item.value }}"
+                                        data-description="{{ item.description }}"
+                                        data-order="{{ item.order }}"
+                                        style="border:none; cursor:pointer;"
+                                        title="Edit achievement">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                                <form action="{% url 'cms_delete_achievement' item.id %}" method="POST" style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="action-btn action-delete" data-confirm="Are you sure you want to delete this achievement?" title="Delete achievement"><i class="fa-solid fa-trash"></i></button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" style="text-align: center; color: var(--color-text-muted); padding:2rem;">No milestones added. Add one above!</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ==========================================
+     TAB 4: FACILITIES
+     ========================================== -->
+<div class="cms-tab-content" id="tabFacilities">
+    <div class="cms-card">
+        <div class="cms-card-header">
+            <h3 class="cms-card-title">School Facilities Grid</h3>
+            <button id="addFacilityBtn" data-action-url="{% url 'cms_add_facility' %}" class="cms-btn cms-btn-primary cms-btn-sm"><i class="fa-solid fa-plus"></i> Add Facility</button>
+        </div>
+        
+        <div class="cms-table-responsive">
+            <table class="cms-table">
+                <thead>
+                    <tr>
+                        <th style="width:100px;">Photo</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th style="width:100px;">Sort Order</th>
+                        <th style="width:120px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in facilities %}
+                    <tr>
+                        <td><img src="{{ item.image.url }}" alt="{{ item.title }}" style="width:70px; height:50px; object-fit:cover; border-radius:var(--border-radius-sm);"></td>
+                        <td><strong>{{ item.title }}</strong></td>
+                        <td>{{ item.description }}</td>
+                        <td>{{ item.order }}</td>
+                        <td>
+                            <div class="action-links">
+                                <button class="action-btn action-edit edit-facility-btn" 
+                                        data-action-url="{% url 'cms_edit_facility' item.id %}"
+                                        data-title="{{ item.title }}"
+                                        data-description="{{ item.description }}"
+                                        data-order="{{ item.order }}"
+                                        style="border:none; cursor:pointer;"
+                                        title="Edit facility">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                                <form action="{% url 'cms_delete_facility' item.id %}" method="POST" style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="action-btn action-delete" data-confirm="Are you sure you want to delete this facility?" title="Delete facility"><i class="fa-solid fa-trash"></i></button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" style="text-align: center; color: var(--color-text-muted); padding:2rem;">No facility cards created. Add one above!</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<!-- ==========================================
+     POPUP MODAL: ACADEMIC HIGHLIGHT FORM
+     ========================================== -->
+<!-- ==========================================
+     POPUP MODAL: HIGHLIGHT CARD FORM
+     ========================================== -->
+<div class="cms-modal" id="highlightModal">
+    <div class="cms-modal-box">
+        <div class="cms-modal-header">
+            <h3>Add Academic Highlight</h3>
+            <button class="cms-modal-close">&times;</button>
+        </div>
+        <form method="POST" action="{{ highlight_form_action|default:'' }}" class="cms-modal-body cms-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="{{ highlight_form.title.id_for_label }}">Title</label>
+                {{ highlight_form.title }}
+                {% if highlight_form.title.errors %}
+                    <span class="field-error" style="color:var(--color-secondary); font-size:0.8rem; margin-top:0.25rem; font-weight:600;">{{ highlight_form.title.errors.0 }}</span>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ highlight_form.description.id_for_label }}">Description</label>
+                {{ highlight_form.description }}
+                {% if highlight_form.description.errors %}
+                    <span class="field-error" style="color:var(--color-secondary); font-size:0.8rem; margin-top:0.25rem; font-weight:600;">{{ highlight_form.description.errors.0 }}</span>
+                {% endif %}
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="{{ highlight_form.icon_class.id_for_label }}">Icon Category</label>
+                    {{ highlight_form.icon_class }}
+                    {% if highlight_form.icon_class.errors %}
+                        <span class="field-error" style="color:var(--color-secondary); font-size:0.8rem; margin-top:0.25rem; font-weight:600;">{{ highlight_form.icon_class.errors.0 }}</span>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ highlight_form.order.id_for_label }}">Sort Order</label>
+                    {{ highlight_form.order }}
+                    {% if highlight_form.order.errors %}
+                        <span class="field-error" style="color:var(--color-secondary); font-size:0.8rem; margin-top:0.25rem; font-weight:600;">{{ highlight_form.order.errors.0 }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div style="margin-top: 2rem; display:flex; justify-content:flex-end; gap:1rem;">
+                <button type="button" class="cms-btn cms-btn-outline modal-cancel">Cancel</button>
+                <button type="submit" class="cms-btn cms-btn-primary">Save Highlight <i class="fa-solid fa-save"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- ==========================================
+     POPUP MODAL: ACHIEVEMENT STAT FORM
+     ========================================== -->
+<div class="cms-modal" id="achievementModal">
+    <div class="cms-modal-box">
+        <div class="cms-modal-header">
+            <h3>Add Achievement</h3>
+            <button class="cms-modal-close">&times;</button>
+        </div>
+        <form method="POST" action="{{ achievement_form_action|default:'' }}" class="cms-modal-body cms-form">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="{{ achievement_form.value.id_for_label }}">Stat / Value</label>
+                    {{ achievement_form.value }}
+                    {% if achievement_form.value.errors %}
+                        <span class="field-error" style="color:var(--color-secondary); font-size:0.8rem; margin-top:0.25rem; font-weight:600;">{{ achievement_form.value.errors.0 }}</span>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ achievement_form.order.id_for_label }}">Sort Order</label>
+                    {{ achievement_form.order }}
+                    {% if achievement_form.order.errors %}
+                        <span class="field-error" style="color:var(--color-secondary); font-size:0.8rem; margin-top:0.25rem; font-weight:600;">{{ achievement_form.order.errors.0 }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="{{ achievement_form.title.id_for_label }}">Title</label>
+                {{ achievement_form.title }}
+                {% if achievement_form.title.errors %}
+                    <span class="field-error" style="color:var(--color-secondary); font-size:0.8rem; margin-top:0.25rem; font-weight:600;">{{ achievement_form.title.errors.0 }}</span>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ achievement_form.description.id_for_label }}">Short Description</label>
+                {{ achievement_form.description }}
+                {% if achievement_form.description.errors %}
+                    <span class="field-error" style="color:var(--color-secondary); font-size:0.8rem; margin-top:0.25rem; font-weight:600;">{{ achievement_form.description.errors.0 }}</span>
+                {% endif %}
+            </div>
+            <div style="margin-top: 2rem; display:flex; justify-content:flex-end; gap:1rem;">
+                <button type="button" class="cms-btn cms-btn-outline modal-cancel">Cancel</button>
+                <button type="submit" class="cms-btn cms-btn-primary">Save Achievement <i class="fa-solid fa-save"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- ==========================================
+     POPUP MODAL: FACILITY CARD FORM
+     ========================================== -->
+<div class="cms-modal" id="facilityModal">
+    <div class="cms-modal-box">
+        <div class="cms-modal-header">
+            <h3>Add School Facility</h3>
+            <button class="cms-modal-close">&times;</button>
+        </div>
+        <form method="POST" action="{{ facility_form_action|default:'' }}" enctype="multipart/form-data" class="cms-modal-body cms-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="{{ facility_form.title.id_for_label }}">Facility Title</label>
+                {{ facility_form.title }}
+                {% if facility_form.title.errors %}
+                    <span class="field-error" style="color:var(--color-secondary); font-size:0.8rem; margin-top:0.25rem; font-weight:600;">{{ facility_form.title.errors.0 }}</span>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ facility_form.description.id_for_label }}">Description</label>
+                {{ facility_form.description }}
+                {% if facility_form.description.errors %}
+                    <span class="field-error" style="color:var(--color-secondary); font-size:0.8rem; margin-top:0.25rem; font-weight:600;">{{ facility_form.description.errors.0 }}</span>
+                {% endif %}
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="{{ facility_form.image.id_for_label }}">Facility Image</label>
+                    {{ facility_form.image }}
+                    {% if facility_form.image.errors %}
+                        <span class="field-error" style="color:var(--color-secondary); font-size:0.8rem; margin-top:0.25rem; font-weight:600;">{{ facility_form.image.errors.0 }}</span>
+                    {% endif %}
+                    <span class="help-text">JPG/PNG. Recommended size: 640x480px.</span>
+                </div>
+                <div class="form-group">
+                    <label for="{{ facility_form.order.id_for_label }}">Sort Order</label>
+                    {{ facility_form.order }}
+                    {% if facility_form.order.errors %}
+                        <span class="field-error" style="color:var(--color-secondary); font-size:0.8rem; margin-top:0.25rem; font-weight:600;">{{ facility_form.order.errors.0 }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div style="margin-top: 2rem; display:flex; justify-content:flex-end; gap:1rem;">
+                <button type="button" class="cms-btn cms-btn-outline modal-cancel">Cancel</button>
+                <button type="submit" class="cms-btn cms-btn-primary">Save Facility <i class="fa-solid fa-save"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if open_modal %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Auto open modal on validation failure
+        const modalId = '{{ open_modal }}';
+        const targetModal = document.getElementById(modalId);
+        if (targetModal) {
+            targetModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Switch to the correct tab holding the modal context
+        {% if open_modal == 'highlightModal' %}
+            const tabBtn = document.querySelector('[data-tab="tabHighlights"]');
+            if (tabBtn) tabBtn.click();
+        {% elif open_modal == 'achievementModal' %}
+            const tabBtn = document.querySelector('[data-tab="tabAchievements"]');
+            if (tabBtn) tabBtn.click();
+        {% elif open_modal == 'facilityModal' %}
+            const tabBtn = document.querySelector('[data-tab="tabFacilities"]');
+            if (tabBtn) tabBtn.click();
+        {% endif %}
+    });
+</script>
+{% endif %}
+
+{% endblock %}

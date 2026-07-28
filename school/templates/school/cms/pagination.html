@@ -1,0 +1,32 @@
+{% if page_obj.has_other_pages %}
+<div class="cms-pagination-container">
+    <div class="cms-pagination-info">
+        Showing {{ page_obj.start_index }} to {{ page_obj.end_index }} of {{ page_obj.paginator.count }} items
+    </div>
+    <div class="cms-pagination-controls">
+        {% if page_obj.has_previous %}
+            <a href="?page=1" class="cms-pagination-link" title="First Page"><i class="fa-solid fa-angles-left"></i></a>
+            <a href="?page={{ page_obj.previous_page_number }}" class="cms-pagination-link" title="Previous Page"><i class="fa-solid fa-angle-left"></i></a>
+        {% else %}
+            <span class="cms-pagination-link disabled"><i class="fa-solid fa-angles-left"></i></span>
+            <span class="cms-pagination-link disabled"><i class="fa-solid fa-angle-left"></i></span>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <span class="cms-pagination-link active">{{ num }}</span>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <a href="?page={{ num }}" class="cms-pagination-link">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="cms-pagination-link" title="Next Page"><i class="fa-solid fa-angle-right"></i></a>
+            <a href="?page={{ page_obj.paginator.num_pages }}" class="cms-pagination-link" title="Last Page"><i class="fa-solid fa-angles-right"></i></a>
+        {% else %}
+            <span class="cms-pagination-link disabled"><i class="fa-solid fa-angle-right"></i></span>
+            <span class="cms-pagination-link disabled"><i class="fa-solid fa-angles-right"></i></span>
+        {% endif %}
+    </div>
+</div>
+{% endif %}

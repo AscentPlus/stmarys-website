@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel Login</title>
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CMS Stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/cms.css' %}">
+</head>
+<body class="login-body">
+
+    <div class="login-container">
+        <div class="login-logo">
+            <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        
+        <div class="login-header">
+            <h2>Admin Panel Login</h2>
+            <p>Please log in using your staff credentials.</p>
+        </div>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="cms-alert cms-alert-danger" style="padding: 0.75rem 1rem; font-size: 0.85rem; margin-bottom: 1.5rem;">
+                    <span>{{ message }}</span>
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <form method="POST" class="cms-form" style="text-align: left;">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="id_username">Username</label>
+                <input type="text" name="username" autofocus maxlength="150" required id="id_username" class="form-control" placeholder="Enter username">
+            </div>
+            
+            <div class="form-group" style="margin-top: 1rem;">
+                <label for="id_password">Password</label>
+                <input type="password" name="password" required id="id_password" class="form-control" placeholder="Enter password">
+            </div>
+            
+            <button type="submit" class="cms-btn cms-btn-primary" style="width: 100%; justify-content: center; margin-top: 2rem; padding: 0.85rem 1rem;">
+                Access Dashboard <i class="fa-solid fa-arrow-right-to-bracket"></i>
+            </button>
+        </form>
+        
+        <div style="margin-top: 2rem; font-size: 0.85rem;">
+            <a href="{% url 'home' %}" style="color: var(--color-text-muted);"><i class="fa-solid fa-arrow-left-long"></i> Back to Public Website</a>
+        </div>
+    </div>
+
+</body>
+</html>

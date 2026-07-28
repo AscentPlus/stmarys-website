@@ -1,0 +1,77 @@
+{% extends 'school/cms/base.html' %}
+{% load static %}
+
+{% block cms_title %}
+    <h1>{{ action }} Announcement</h1>
+    <p>{% if action == 'Add' %}Create a notice or circular for parents and visitors.{% else %}Update the circular '{{ form.instance.title }}'.{% endif %}</p>
+{% endblock %}
+
+{% block cms_content %}
+
+<div class="cms-card">
+    <form method="POST" enctype="multipart/form-data" class="cms-form">
+        {% csrf_token %}
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label for="{{ form.category.id_for_label }}">Category Type</label>
+                {{ form.category }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.title.id_for_label }}">Announcement Title</label>
+                {{ form.title }}
+            </div>
+        </div>
+        
+        <div class="form-row" style="margin-top: 1rem;">
+            <div class="form-group">
+                <label for="{{ form.date.id_for_label }}">Date Issued</label>
+                {{ form.date }}
+            </div>
+            
+            <div class="form-group" style="display:flex; gap:1.5rem; margin-top:24px;">
+                <div class="form-check" style="display:flex; align-items:center;">
+                    {{ form.is_pinned }}
+                    <label for="{{ form.is_pinned.id_for_label }}" style="margin-bottom:0; cursor:pointer; margin-left:0.5rem;">Pin Announcement (Appears at top)</label>
+                </div>
+                <div class="form-check" style="display:flex; align-items:center;">
+                    {{ form.is_published }}
+                    <label for="{{ form.is_published.id_for_label }}" style="margin-bottom:0; cursor:pointer; margin-left:0.5rem;">Publish (Visible immediately)</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-row" style="margin-top: 1rem;">
+            <div class="form-group" style="grid-column: span 2;">
+                <label for="{{ form.description.id_for_label }}">Notice / Description Body</label>
+                {{ form.description }}
+            </div>
+        </div>
+        
+        <div class="form-row" style="margin-top: 1rem;">
+            <div class="form-group">
+                <label for="{{ form.pdf_file.id_for_label }}">Attachment Document (PDF)</label>
+                <div class="image-preview-container" style="display:flex; flex-direction:column; justify-content:center; align-items:flex-start; min-height:100px;">
+                    {% if form.instance.pdf_file %}
+                        <div style="margin-bottom:0.5rem; font-size:0.9rem; color:var(--color-primary-dark);">
+                            <i class="fa-solid fa-file-pdf" style="color:var(--color-secondary);"></i> Current Document: 
+                            <a href="{{ form.instance.pdf_file.url }}" target="_blank" rel="noopener noreferrer">{{ form.instance.pdf_file.name }}</a>
+                        </div>
+                    {% endif %}
+                    {{ form.pdf_file }}
+                    <span class="help-text" style="margin-top:0.5rem;">Upload notices or school forms in PDF format.</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Submit Actions -->
+        <div style="margin-top: 3rem; display:flex; justify-content:flex-end; gap:1rem;">
+            <a href="{% url 'cms_manage_announcements' %}" class="cms-btn cms-btn-outline">Cancel</a>
+            <button type="submit" class="cms-btn cms-btn-primary">
+                {{ action }} Announcement <i class="fa-solid fa-save"></i>
+            </button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

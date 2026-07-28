@@ -1,0 +1,158 @@
+{% extends 'school/cms/base.html' %}
+{% load static %}
+
+{% block cms_title %}
+    <h1>Website Settings</h1>
+    <p>Configure branding, contacts, and social media links.</p>
+{% endblock %}
+
+{% block cms_content %}
+
+<div class="cms-card">
+    <form method="POST" enctype="multipart/form-data" class="cms-form">
+        {% csrf_token %}
+        
+        <!-- Section 1: Core Branding & Hero -->
+        <div style="border-bottom: 1.5px solid var(--color-bg-body); padding-bottom: 1.5rem; margin-bottom: 1.5rem;">
+            <h3 style="font-size: 1.2rem; color: var(--color-primary); margin-bottom: 1.5rem;"><i class="fa-solid fa-school"></i> Branding & Hero Section</h3>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="{{ form.school_name.id_for_label }}">School Name</label>
+                    {{ form.school_name }}
+                    <span class="help-text">{{ form.school_name.help_text }}</span>
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.school_motto.id_for_label }}">School Motto</label>
+                    {{ form.school_motto }}
+                    <span class="help-text">{{ form.school_motto.help_text }}</span>
+                </div>
+            </div>
+            
+            <div class="form-row" style="margin-top: 1.5rem;">
+                <div class="form-group">
+                    <label for="{{ form.hero_heading.id_for_label }}">Hero Heading</label>
+                    {{ form.hero_heading }}
+                </div>
+            </div>
+            
+            <div class="form-row" style="margin-top: 1.5rem;">
+                <div class="form-group">
+                    <label for="{{ form.hero_cta_text.id_for_label }}">CTA Button Text</label>
+                    {{ form.hero_cta_text }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.hero_cta_link.id_for_label }}">CTA Button Link</label>
+                    {{ form.hero_cta_link }}
+                </div>
+            </div>
+            
+            <div class="form-row" style="margin-top: 1.5rem;">
+                <!-- Logo File Upload & Preview -->
+                <div class="form-group">
+                    <label>School Logo</label>
+                    <div class="image-preview-container">
+                        {% if settings.logo %}
+                            <img src="{{ settings.logo.url }}" class="image-preview-thumbnail" alt="Current Logo">
+                        {% else %}
+                            <div class="image-preview-thumbnail" style="display:flex; align-items:center; justify-content:center; background:#fff;"><i class="fa-solid fa-image" style="color:var(--color-primary); font-size:1.5rem;"></i></div>
+                        {% endif %}
+                        <div class="image-preview-info">
+                            {{ form.logo }}
+                            <span class="help-text">Select transparent PNG/JPG. Recommended size: 200x200px.</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Hero Bg File Upload & Preview -->
+                <div class="form-group">
+                    <label>Hero Background Image</label>
+                    <div class="image-preview-container">
+                        {% if settings.hero_bg %}
+                            <img src="{{ settings.hero_bg.url }}" class="image-preview-thumbnail" alt="Current Hero BG">
+                        {% else %}
+                            <div class="image-preview-thumbnail" style="display:flex; align-items:center; justify-content:center; background:#fff;"><i class="fa-solid fa-image" style="color:var(--color-primary); font-size:1.5rem;"></i></div>
+                        {% endif %}
+                        <div class="image-preview-info">
+                            {{ form.hero_bg }}
+                            <span class="help-text">Large photograph of children. Recommended size: 1920x1080px.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Section 2: Contact Details -->
+        <div style="border-bottom: 1.5px solid var(--color-bg-body); padding-bottom: 1.5rem; margin-bottom: 1.5rem;">
+            <h3 style="font-size: 1.2rem; color: var(--color-primary); margin-bottom: 1.5rem;"><i class="fa-solid fa-address-book"></i> Contact Details & Coordinates</h3>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="{{ form.phone.id_for_label }}">Contact Phone Number</label>
+                    {{ form.phone }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.email.id_for_label }}">Contact Email Address</label>
+                    {{ form.email }}
+                </div>
+            </div>
+            
+            <div class="form-row" style="margin-top: 1.5rem;">
+                <div class="form-group">
+                    <label for="{{ form.address.id_for_label }}">Physical School Address</label>
+                    {{ form.address }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.map_iframe.id_for_label }}">Google Map Embed Code</label>
+                    {{ form.map_iframe }}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Section 3: Social Media Coordinates -->
+        <div>
+            <h3 style="font-size: 1.2rem; color: var(--color-primary); margin-bottom: 1.5rem;"><i class="fa-solid fa-share-nodes"></i> Social Coordinates</h3>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="{{ form.social_facebook.id_for_label }}"><i class="fa-brands fa-facebook" style="color:#1877F2;"></i> Facebook URL</label>
+                    {{ form.social_facebook }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.social_instagram.id_for_label }}"><i class="fa-brands fa-instagram" style="color:#E1306C;"></i> Instagram URL</label>
+                    {{ form.social_instagram }}
+                </div>
+            </div>
+            
+            <div class="form-row" style="margin-top: 1.5rem;">
+                <div class="form-group">
+                    <label for="{{ form.social_youtube.id_for_label }}"><i class="fa-brands fa-youtube" style="color:#FF0000;"></i> YouTube Channel URL</label>
+                    {{ form.social_youtube }}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Submit Bar -->
+        <div style="margin-top: 2rem; display:flex; justify-content:flex-end;">
+            <button type="submit" class="cms-btn cms-btn-primary" style="padding: 0.85rem 2rem;">
+                Save All Settings <i class="fa-solid fa-save"></i>
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- Security Settings Card -->
+<div class="cms-card" style="margin-top: 2rem;">
+    <h3 style="font-size: 1.2rem; color: var(--color-primary); margin-bottom: 1rem;"><i class="fa-solid fa-shield-halved"></i> Security</h3>
+    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+        <p style="font-size: 0.95rem; color: var(--color-text-muted);">
+            Click below to update the admin login password.
+        </p>
+        <div style="margin-top: 0.5rem;">
+            <a href="{% url 'cms_change_password' %}" class="cms-btn cms-btn-outline" style="padding: 0.65rem 1.25rem;">
+                <i class="fa-solid fa-key"></i> Change Password
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
