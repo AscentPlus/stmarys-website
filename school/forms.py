@@ -55,60 +55,10 @@ class WebsiteSettingForm(StyledModelForm):
         model = WebsiteSetting
         exclude = ['social_twitter']
         widgets = {
-            'map_iframe': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Paste Google Map embed iframe HTML code'}),
             'address': forms.Textarea(attrs={'rows': 3}),
             'logo': forms.FileInput(),
             'hero_bg': forms.FileInput(),
         }
-
-    def clean_map_iframe(self):
-        data = self.cleaned_data.get('map_iframe', '').strip()
-        if not data:
-            return data
-        
-        import re
-        import html
-        from urllib.parse import urlparse
-        
-        # If it looks like an iframe tag, extract the src URL
-        if '<iframe' in data:
-            match = re.search(r'src="([^"]+)"', data)
-            if match:
-                url = match.group(1)
-            else:
-                raise forms.ValidationError("Invalid iframe code: Could not find the source URL.")
-        else:
-            url = data
-            
-        # Clean the URL (strip quotes and unescape HTML entities)
-        url = url.strip('"\'').strip()
-        url = html.unescape(url)
-        
-        # Strengthen validation: reject any invalid characters or whitespace
-        invalid_chars = ['"', "'", '<', '>']
-        if any(char in url for char in invalid_chars) or any(char.isspace() for char in url):
-            raise forms.ValidationError("URL contains invalid characters or whitespace.")
-            
-        # Validate the URL
-        parsed_url = urlparse(url)
-        if parsed_url.scheme != 'https':
-            raise forms.ValidationError("URL must use HTTPS.")
-            
-        # Must be google maps domain
-        domain = parsed_url.netloc.lower()
-        allowed_domains = [
-            'www.google.com', 'google.com', 
-            'www.google.co.in', 'google.co.in', 
-            'maps.google.com', 'maps.google.co.in'
-        ]
-        if domain not in allowed_domains:
-            raise forms.ValidationError("Only Google Maps URLs are allowed.")
-            
-        # Must start with embed path
-        if not (parsed_url.path.startswith('/maps/embed') or parsed_url.path.startswith('/maps/d/embed')):
-            raise forms.ValidationError("Must be a Google Maps Embed URL (must start with /maps/embed or /maps/d/embed).")
-            
-        return url
 
 
 class AboutSectionForm(StyledModelForm):

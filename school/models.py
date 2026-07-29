@@ -29,11 +29,6 @@ class WebsiteSetting(SingletonModel):
     phone = models.CharField(max_length=100, default="+91 484 2345678")
     email = models.EmailField(default="info@stmaryslpschool.edu.in")
     address = models.TextField(default="St. Mary's LP School, Church Road, Ernakulam, Kerala, PIN - 682011")
-    map_iframe = models.TextField(
-        blank=True, 
-        null=True,
-        default='<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3929.5678910111!2d76.2811!3d9.9723" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>'
-    )
     
     # Social Links
     social_facebook = models.URLField(blank=True, null=True, default="https://facebook.com")

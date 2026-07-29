@@ -25,25 +25,6 @@ class PublicWebsiteTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Test School")
         
-    def test_google_maps_url_cleaning(self):
-        from .forms import WebsiteSettingForm
-        # Test cleaning a raw URL with trailing quotes and HTML entities
-        raw_url = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d983!2d76!3d9!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b06322e7648bf55%3A0x5d80ee1ac35ede35!2sSt.%20Mary&#39;s%20School" '
-        form = WebsiteSettingForm(data={
-            'school_name': 'Test School',
-            'school_motto': 'Nurturing Hearts',
-            'hero_heading': 'Welcome',
-            'hero_cta_text': 'CTA',
-            'hero_cta_link': '#',
-            'address': 'Test Address',
-            'email': 'test@school.com',
-            'phone': '123456',
-            'map_iframe': raw_url
-        })
-        self.assertTrue(form.is_valid(), form.errors)
-        cleaned_url = form.cleaned_data['map_iframe']
-        self.assertEqual(cleaned_url, "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d983!2d76!3d9!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b06322e7648bf55%3A0x5d80ee1ac35ede35!2sSt.%20Mary's%20School")
-
     def test_contact_form_submission_success(self):
         payload = {
             'name': 'John Doe',

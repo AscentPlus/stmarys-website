@@ -155,13 +155,38 @@ LOGOUT_REDIRECT_URL = '/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# --- CACHE CONFIGURATION (REDIS) ---
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-        'LOCATION': env.str('REDIS_URL', default='redis://127.0.0.1:6379/1'),
+# --- CACHE CONFIGURATION (REDIS with fallback to LocMemCache) ---
+import socket
+from urllib.parse import urlparse
+
+redis_url = env.str('REDIS_URL', default='redis://127.0.0.1:6379/1')
+
+redis_available = False
+try:
+    parsed_redis = urlparse(redis_url)
+    host = parsed_redis.hostname or '127.0.0.1'
+    port = parsed_redis.port or 6379
+    # Attempt to establish a connection with a short timeout (0.5 seconds)
+    # to check if Redis server is reachable.
+    with socket.create_connection((host, port), timeout=0.5):
+        redis_available = True
+except (socket.error, ValueError):
+    redis_available = False
+
+if redis_available:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+            'LOCATION': redis_url,
+        }
     }
-}
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'unique-snowflake',
+        }
+    }
 
 # --- SESSION COOKIE HARDENING & SLIDING EXPIRY ---
 SESSION_COOKIE_AGE = 28800  # 8 hours in seconds
