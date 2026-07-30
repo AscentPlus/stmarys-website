@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel Dashboard</title>
+    <link rel="icon" type="image/png" href="{% static 'images/school_logo.png' %}">
     
     <!-- Fonts & Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
@@ -108,7 +109,7 @@
                 {% for message in messages %}
                     <div class="cms-alert cms-alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}">
                         <span>{{ message }}</span>
-                        <button class="cms-alert-close" onclick="this.parentElement.style.display='none';">&times;</button>
+                        <button class="cms-alert-close" aria-label="Close alert">&times;</button>
                     </div>
                 {% endfor %}
             {% endif %}

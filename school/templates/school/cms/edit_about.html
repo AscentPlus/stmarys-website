@@ -487,30 +487,6 @@
     </div>
 </div>
 
-{% if open_modal %}
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Auto open modal on validation failure
-        const modalId = '{{ open_modal }}';
-        const targetModal = document.getElementById(modalId);
-        if (targetModal) {
-            targetModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        
-        // Switch to the correct tab holding the modal context
-        {% if open_modal == 'highlightModal' %}
-            const tabBtn = document.querySelector('[data-tab="tabHighlights"]');
-            if (tabBtn) tabBtn.click();
-        {% elif open_modal == 'achievementModal' %}
-            const tabBtn = document.querySelector('[data-tab="tabAchievements"]');
-            if (tabBtn) tabBtn.click();
-        {% elif open_modal == 'facilityModal' %}
-            const tabBtn = document.querySelector('[data-tab="tabFacilities"]');
-            if (tabBtn) tabBtn.click();
-        {% endif %}
-    });
-</script>
-{% endif %}
+<input type="hidden" id="openModalData" data-open-modal="{{ open_modal|default:'' }}">
 
 {% endblock %}

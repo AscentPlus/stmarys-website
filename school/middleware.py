@@ -8,19 +8,46 @@ class ContentSecurityPolicyMiddleware:
         # Build strict Content Security Policy directives
         csp_directives = [
             "default-src 'self'",
-            "script-src 'self' 'unsafe-inline'",
-            "style-src 'self' 'unsafe-inline' fonts.googleapis.com cdnjs.cloudflare.com",
-            "img-src 'self' data: *",  # Allow local media and external logos
-            "font-src 'self' data: fonts.gstatic.com cdnjs.cloudflare.com",
-            "frame-src 'self' *.google.com *.google.co.in",  # Support Google Maps embeds
+            "base-uri 'self'",
+            "object-src 'none'",
+            "frame-ancestors 'none'",
+            "form-action 'self'",
+            "manifest-src 'self'",
+            "worker-src 'self'",
+            "media-src 'self'",
+            "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com",
+            "img-src 'self' data: blob:",
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com",
+            "script-src 'self' https://cdnjs.cloudflare.com",
             "connect-src 'self'",
+            "frame-src 'self' https://www.google.com https://www.google.co.in",
         ]
         
         response["Content-Security-Policy"] = "; ".join(csp_directives)
         
-        # Hardened standard headers
+        # Hardened standard security headers
         response["X-Content-Type-Options"] = "nosniff"
-        response["X-Frame-Options"] = "SAMEORIGIN"
-        response["Referrer-Policy"] = "same-origin"
+        response["X-Frame-Options"] = "DENY"
+        response["Referrer-Policy"] = "strict-origin-when-cross-origin"
+        response["X-XSS-Protection"] = "0"
+        
+        # Cross-Origin Policies
+        response["Cross-Origin-Opener-Policy"] = "same-origin"
+        response["Cross-Origin-Resource-Policy"] = "same-origin"
+        response["Cross-Origin-Embedder-Policy"] = "unsafe-none"
+        
+        # Permissions Policy
+        response["Permissions-Policy"] = (
+            "geolocation=(), "
+            "camera=(), "
+            "microphone=(), "
+            "payment=(), "
+            "usb=(), "
+            "accelerometer=(), "
+            "gyroscope=(), "
+            "magnetometer=(), "
+            "interest-cohort=(), "
+            "fullscreen=(self)"
+        )
         
         return response

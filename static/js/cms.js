@@ -240,7 +240,6 @@ document.addEventListener('DOMContentLoaded', () => {
             closeAllModals();
         });
     }
-
     // Intercept clicks on links/buttons requesting confirmation
     document.addEventListener('click', (e) => {
         const trigger = e.target.closest('[data-confirm]');
@@ -259,4 +258,42 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+
+    // Handle alert close buttons (replacing inline onclick)
+    document.addEventListener('click', (e) => {
+        const closeBtn = e.target.closest('.cms-alert-close');
+        if (closeBtn) {
+            const alert = closeBtn.closest('.cms-alert');
+            if (alert) {
+                alert.style.display = 'none';
+            }
+        }
+    });
+
+    // Auto open modal on validation failure (replacing inline script in edit_about.html)
+    const openModalEl = document.getElementById('openModalData');
+    if (openModalEl) {
+        const modalId = openModalEl.getAttribute('data-open-modal');
+        if (modalId) {
+            const targetModal = document.getElementById(modalId);
+            if (targetModal) {
+                targetModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+            
+            // Switch to the correct tab holding the modal context
+            let tabName = '';
+            if (modalId === 'highlightModal') {
+                tabName = 'tabHighlights';
+            } else if (modalId === 'achievementModal') {
+                tabName = 'tabAchievements';
+            } else if (modalId === 'facilityModal') {
+                tabName = 'tabFacilities';
+            }
+            if (tabName) {
+                const tabBtn = document.querySelector(`[data-tab="${tabName}"]`);
+                if (tabBtn) tabBtn.click();
+            }
+        }
+    }
 });

@@ -285,7 +285,7 @@ section {
     box-shadow: var(--shadow-md);
 }
 .navbar-container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -756,7 +756,7 @@ section {
     margin: 5rem 0;
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-lg);
-    clip-path: inset(0 0 0 0); /* clipping enables fixed relative child rendering */
+    clip-path: inset(0 0 0 0 round var(--border-radius-lg)); /* Clips fixed child elements to rounded corners without breaking containing block */
     z-index: 1; /* Establishes stacking context so negative z-index children do not render behind body */
 }
 
@@ -868,19 +868,11 @@ section {
     position: relative;
     overflow: hidden;
     transition: var(--transition-bounce);
+    border: 2px solid var(--color-primary);
 }
 .highlight-card:hover {
     transform: translateY(-8px);
     box-shadow: var(--shadow-md);
-}
-.highlight-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 6px;
-    height: 100%;
-    background-color: var(--color-primary);
 }
 .highlight-icon-wrapper {
     width: 64px;
@@ -894,8 +886,8 @@ section {
     color: var(--color-primary);
     font-size: 1.8rem;
 }
-.highlight-card:nth-child(even)::before {
-    background-color: var(--color-secondary);
+.highlight-card:nth-child(even) {
+    border-color: var(--color-secondary);
 }
 .highlight-card:nth-child(even) .highlight-icon-wrapper {
     background-color: rgba(229, 57, 53, 0.1);
@@ -1034,6 +1026,9 @@ section {
     transition: var(--transition-bounce);
     display: flex;
     flex-direction: column;
+    max-width: 480px;
+    margin: 0 auto;
+    width: 100%;
 }
 .event-card:nth-child(even) {
     transform: translateY(40px); /* Stagger effect */
@@ -1259,6 +1254,9 @@ section {
     transition: var(--transition-bounce);
     position: relative;
     aspect-ratio: 1;
+    max-width: 360px;
+    margin: 0 auto;
+    width: 100%;
 }
 .album-image {
     width: 100%;
@@ -1819,6 +1817,9 @@ textarea.form-field {
 }
 
 @media (max-width: 768px) {
+    .ticker-title {
+        display: none !important;
+    }
     .top-bar-socials {
         display: none !important;
     }
