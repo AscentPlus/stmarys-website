@@ -681,3 +681,27 @@ def cms_delete_message(request, pk):
     msg.delete()
     messages.success(request, "Message deleted.")
     return redirect('cms_view_messages')
+
+
+def sitemap_view(request):
+    from django.http import HttpResponse
+    xml_content = """<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://stmarysemschool.in/</loc>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>
+</urlset>"""
+    return HttpResponse(xml_content, content_type="application/xml")
+
+
+def robots_view(request):
+    from django.http import HttpResponse
+    content = """User-agent: *
+Allow: /
+Disallow: /cms/
+Disallow: /admin/
+Sitemap: https://stmarysemschool.in/sitemap.xml
+"""
+    return HttpResponse(content, content_type="text/plain")

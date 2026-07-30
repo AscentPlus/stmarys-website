@@ -53,4 +53,8 @@ urlpatterns = [
     path('cms/messages/', views.cms_view_messages, name='cms_view_messages'),
     path('cms/messages/read/<int:pk>/', views.cms_read_message, name='cms_read_message'),
     path('cms/messages/delete/<int:pk>/', views.cms_delete_message, name='cms_delete_message'),
+
+    # SEO Paths
+    path('sitemap.xml', views.sitemap_view, name='sitemap_xml'),
+    path('robots.txt', views.robots_view, name='robots_txt'),
 ]

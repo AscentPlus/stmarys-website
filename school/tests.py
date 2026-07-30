@@ -25,6 +25,18 @@ class PublicWebsiteTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Test School")
         
+    def test_sitemap_xml_load(self):
+        response = self.client.get(reverse('sitemap_xml'))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['Content-Type'], 'application/xml')
+        self.assertIn(b'stmarysemschool.in', response.content)
+
+    def test_robots_txt_load(self):
+        response = self.client.get(reverse('robots_txt'))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['Content-Type'], 'text/plain')
+        self.assertIn(b'Disallow: /admin/', response.content)
+        
     def test_contact_form_submission_success(self):
         payload = {
             'name': 'John Doe',
