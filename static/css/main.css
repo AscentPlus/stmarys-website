@@ -1896,3 +1896,149 @@ textarea.form-field {
         font-size: 2.5rem;
     }
 }
+
+/* 
+   =========================================
+   Semantic Helper Classes (SEO Inline Style Migrations)
+   =========================================
+*/
+.logo-img-fallback {
+    background-color: var(--color-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.logo-img-fallback-icon {
+    color: var(--color-primary);
+    font-size: 1.5rem;
+}
+.footer-logo-title {
+    color: var(--color-white);
+    font-weight: 700;
+}
+.footer-designed-by {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    opacity: 0.85;
+    letter-spacing: 0.5px;
+}
+.footer-designer-link {
+    color: var(--color-accent);
+    font-weight: 600;
+    text-decoration: none;
+}
+.intro-paragraph-text {
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+}
+.collage-img-fallback-primary {
+    background: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+.collage-img-fallback-icon-large {
+    font-size: 4rem;
+}
+.collage-img-fallback-secondary {
+    background: var(--color-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+.collage-img-fallback-icon-medium {
+    font-size: 3rem;
+}
+.principal-msg-card {
+    padding: 2.5rem;
+    margin-bottom: 0;
+    box-shadow: var(--shadow-sm);
+    border-radius: var(--border-radius-md);
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin-top: 2rem;
+}
+.principal-msg-text {
+    font-size: 1.05rem;
+    margin-bottom: 1.5rem;
+}
+.principal-signature-title {
+    font-size: 1.15rem;
+}
+.principal-signature-role {
+    font-size: 0.85rem;
+}
+.notice-board-header-icon {
+    font-size: 1.3rem;
+}
+.notice-pinned-label {
+    font-size: 0.6rem;
+    padding: 0.1rem 0.4rem;
+    margin-left: 0.25rem;
+}
+.notice-attachment-link {
+    color: var(--color-secondary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-top: 0.25rem;
+    display: inline-block;
+}
+.notice-empty-state {
+    text-align: center;
+    color: var(--color-text-muted);
+    margin-top: 5rem;
+}
+.notice-timeline-btn {
+    border-radius: var(--border-radius-sm);
+}
+.section-header-wrap {
+    margin-bottom: 3.5rem;
+    text-align: center;
+}
+.section-header-wrap-short {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+.section-header-wrap-long {
+    margin-bottom: 4rem;
+    text-align: center;
+}
+.section-header-wrap-xl {
+    margin-bottom: 4.5rem;
+    text-align: center;
+}
+.facilities-container {
+    padding: 4rem 2rem;
+    border-radius: var(--border-radius-lg);
+    margin-bottom: 6rem;
+}
+.list-empty-state {
+    text-align: center;
+    color: var(--color-text-muted);
+    margin-top: 3rem;
+}
+.list-empty-state-no-margin {
+    text-align: center;
+    color: var(--color-text-muted);
+}
+.contact-social-title {
+    font-size: 0.85rem;
+    color: var(--color-lavender);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+.contact-socials-footer-list {
+    margin-top: 0;
+}
+.honeypot-field {
+    display: none;
+}
+.map-iframe {
+    border: 0;
+}
+

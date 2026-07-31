@@ -1,0 +1,18 @@
+{% load static %}
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="{% block og_title %}St. Mary's English Medium LP School | Vazhoor, Kottayam{% endblock %}">
+<meta property="og:description" content="{% block og_description %}Discover St. Mary's English Medium LP School, Pulickalkavala, Vazhoor, Kottayam, where primary education meets a caring and joyful learning environment.{% endblock %}">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:image" content="{% block og_image %}{% if settings.logo %}{{ request.scheme }}://{{ request.get_host }}{{ settings.logo.url }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/school_logo.png' %}{% endif %}{% endblock %}">
+<meta property="og:site_name" content="{{ settings.school_name }}">
+<meta property="og:locale" content="en_US">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{% block twitter_title %}St. Mary's English Medium LP School | Vazhoor, Kottayam{% endblock %}">
+<meta name="twitter:description" content="{% block twitter_description %}Discover St. Mary's English Medium LP School, Pulickalkavala, Vazhoor, Kottayam, where primary education meets a caring and joyful learning environment.{% endblock %}">
+<meta name="twitter:image" content="{% block twitter_image %}{% if settings.logo %}{{ request.scheme }}://{{ request.get_host }}{{ settings.logo.url }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/school_logo.png' %}{% endif %}{% endblock %}">
+{% if settings.social_twitter %}
+<meta name="twitter:site" content="@stmaryslp">
+{% endif %}

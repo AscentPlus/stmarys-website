@@ -1,0 +1,61 @@
+{% load static %}
+<!-- Structured Data (JSON-LD) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  "@id": "{{ request.scheme }}://{{ request.get_host }}/#organization",
+  "name": "{{ settings.school_name|escapejs }}",
+  "url": "{{ request.scheme }}://{{ request.get_host }}/",
+  "logo": "{% if settings.logo %}{{ request.scheme }}://{{ request.get_host }}{{ settings.logo.url }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/school_logo.png' %}{% endif %}",
+  "description": "{{ about.intro_content|escapejs }}",
+  "telephone": "{{ settings.phone|escapejs }}",
+  "email": "{{ settings.email|escapejs }}",
+  "sameAs": [
+    {% if settings.social_facebook %}"{{ settings.social_facebook|escapejs }}"{% endif %}
+    {% if settings.social_instagram %}{% if settings.social_facebook %},{% endif %}"{{ settings.social_instagram|escapejs }}"{% endif %}
+    {% if settings.social_youtube %}{% if settings.social_facebook or settings.social_instagram %},{% endif %}"{{ settings.social_youtube|escapejs }}"{% endif %}
+    {% if settings.social_twitter %}{% if settings.social_facebook or settings.social_instagram or settings.social_youtube %},{% endif %}"{{ settings.social_twitter|escapejs }}"{% endif %}
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "School",
+  "@id": "{{ request.scheme }}://{{ request.get_host }}/#school",
+  "name": "{{ settings.school_name|escapejs }}",
+  "url": "{{ request.scheme }}://{{ request.get_host }}/",
+  "logo": "{% if settings.logo %}{{ request.scheme }}://{{ request.get_host }}{{ settings.logo.url }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/school_logo.png' %}{% endif %}",
+  "image": "{% if settings.hero_bg %}{{ request.scheme }}://{{ request.get_host }}{{ settings.hero_bg.url }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/hero_default.jpg' %}{% endif %}",
+  "telephone": "{{ settings.phone|escapejs }}",
+  "email": "{{ settings.email|escapejs }}",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "{{ settings.address|escapejs }}"
+  },
+  "sameAs": [
+    {% if settings.social_facebook %}"{{ settings.social_facebook|escapejs }}"{% endif %}
+    {% if settings.social_instagram %}{% if settings.social_facebook %},{% endif %}"{{ settings.social_instagram|escapejs }}"{% endif %}
+    {% if settings.social_youtube %}{% if settings.social_facebook or settings.social_instagram %},{% endif %}"{{ settings.social_youtube|escapejs }}"{% endif %}
+    {% if settings.social_twitter %}{% if settings.social_facebook or settings.social_instagram or settings.social_youtube %},{% endif %}"{{ settings.social_twitter|escapejs }}"{% endif %}
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "{{ request.scheme }}://{{ request.get_host }}/#website",
+  "name": "{{ settings.school_name|escapejs }}",
+  "url": "{{ request.scheme }}://{{ request.get_host }}/",
+  "publisher": {
+    "@type": "EducationalOrganization",
+    "@id": "{{ request.scheme }}://{{ request.get_host }}/#organization"
+  }
+}
+</script>
+
+{% block breadcrumb_schema %}{% endblock %}

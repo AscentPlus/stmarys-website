@@ -97,19 +97,19 @@
             <div class="about-collage-panel">
                 <span class="section-subtitle">About Us</span>
                 <h2 class="section-title">{{ about.intro_title }}</h2>
-                <p style="font-size: 1.1rem; color: var(--color-text-muted); margin-bottom: 2rem;">{{ about.intro_content }}</p>
+                <p class="intro-paragraph-text">{{ about.intro_content }}</p>
                 
                 <div class="about-collage-images">
                     {% if about.intro_image %}
                         <img src="{{ about.intro_image.url }}" class="collage-img-1" alt="Learning at School">
                     {% else %}
-                        <div class="collage-img-1" style="background:var(--color-primary); display:flex; align-items:center; justify-content:center; color:#fff;"><i class="fa-solid fa-graduation-cap" style="font-size:4rem;"></i></div>
+                        <div class="collage-img-1 collage-img-fallback-primary"><i class="fa-solid fa-graduation-cap collage-img-fallback-icon-large"></i></div>
                     {% endif %}
                     
                     {% if about.principal_image %}
                         <img src="{{ about.principal_image.url }}" class="collage-img-2" alt="Principal">
                     {% else %}
-                        <div class="collage-img-2" style="background:var(--color-secondary); display:flex; align-items:center; justify-content:center; color:#fff;"><i class="fa-solid fa-chalkboard-user" style="font-size:3rem;"></i></div>
+                        <div class="collage-img-2 collage-img-fallback-secondary"><i class="fa-solid fa-chalkboard-user collage-img-fallback-icon-medium"></i></div>
                     {% endif %}
                     
                     <div class="collage-stats-card">
@@ -119,13 +119,13 @@
                 </div>
                 
                 <!-- Principal Message Quote Block -->
-                <div class="principal-message-section" style="padding: 2.5rem; margin-bottom: 0; box-shadow: var(--shadow-sm); border-radius: var(--border-radius-md); grid-template-columns: 1fr; gap: 0; margin-top:2rem;">
+                <div class="principal-message-section principal-msg-card">
                     <div class="principal-quote-content">
                         <span class="quote-icon">“</span>
-                        <p class="principal-text" style="font-size:1.05rem; margin-bottom: 1.5rem;">{{ about.principal_message }}</p>
+                        <p class="principal-text principal-msg-text">{{ about.principal_message }}</p>
                         <div class="principal-signature">
-                            <h4 class="principal-sig-title" style="font-size:1.15rem;">{{ about.principal_name }}</h4>
-                            <p class="principal-sig-role" style="font-size:0.85rem;">{{ about.principal_signature }}</p>
+                            <h4 class="principal-sig-title principal-signature-title">{{ about.principal_name }}</h4>
+                            <p class="principal-sig-role principal-signature-role">{{ about.principal_signature }}</p>
                         </div>
                     </div>
                 </div>
@@ -134,7 +134,7 @@
             <!-- Right Column: Notice Board Card -->
             <div class="notice-board-card">
                 <div class="notice-board-header">
-                    <i class="fa-solid fa-bullhorn" style="font-size: 1.3rem;"></i>
+                    <i class="fa-solid fa-bullhorn notice-board-header-icon"></i>
                     <h3>School Notice Board</h3>
                 </div>
                 <div class="notice-board-list">
@@ -146,10 +146,10 @@
                                 <span>{{ item.date|date:"M" }}</span>
                             </div>
                             <div class="notice-board-item-info">
-                                <h4>{{ item.title }} <span class="pinned-label" style="font-size: 0.6rem; padding: 0.1rem 0.4rem; margin-left: 0.25rem;">Pin</span></h4>
+                                <h4>{{ item.title }} <span class="pinned-label notice-pinned-label">Pin</span></h4>
                                 <p>{{ item.description|truncatechars:120 }}</p>
                                 {% if item.pdf_file %}
-                                    <a href="{{ item.pdf_file.url }}" target="_blank" rel="noopener noreferrer" style="color: var(--color-secondary); font-size:0.75rem; font-weight:700; margin-top:0.25rem; display:inline-block;"><i class="fa-solid fa-file-pdf"></i> View Attachment</a>
+                                    <a href="{{ item.pdf_file.url }}" target="_blank" rel="noopener noreferrer" class="notice-attachment-link"><i class="fa-solid fa-file-pdf"></i> View Attachment</a>
                                 {% endif %}
                             </div>
                         </div>
@@ -165,17 +165,17 @@
                                 <h4>{{ item.title }}</h4>
                                 <p>{{ item.description|truncatechars:120 }}</p>
                                 {% if item.pdf_file %}
-                                    <a href="{{ item.pdf_file.url }}" target="_blank" rel="noopener noreferrer" style="color: var(--color-secondary); font-size:0.75rem; font-weight:700; margin-top:0.25rem; display:inline-block;"><i class="fa-solid fa-file-pdf"></i> View Attachment</a>
+                                    <a href="{{ item.pdf_file.url }}" target="_blank" rel="noopener noreferrer" class="notice-attachment-link"><i class="fa-solid fa-file-pdf"></i> View Attachment</a>
                                 {% endif %}
                             </div>
                         </div>
                         {% endfor %}
                     {% else %}
-                        <p style="text-align: center; color: var(--color-text-muted); margin-top: 5rem;">No circular announcements posted today.</p>
+                        <p class="notice-empty-state">No circular announcements posted today.</p>
                     {% endif %}
                 </div>
                 <div class="notice-board-btn-wrapper">
-                    <a href="#announcements" class="cms-btn cms-btn-primary cms-btn-sm" style="border-radius: var(--border-radius-sm);">View Detailed Timeline <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="#announcements" class="cms-btn cms-btn-primary cms-btn-sm notice-timeline-btn">View Detailed Timeline <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
             </div>
             
@@ -195,7 +195,7 @@
         <!-- 4. Achievements Section -->
         {% if achievements %}
         <div class="achievements-section">
-            <div class="text-center" style="margin-bottom: 3.5rem;">
+            <div class="text-center section-header-wrap">
                 <span class="section-subtitle">Our Pride</span>
                 <h2 class="section-title">Milestones & <span>Achievements</span></h2>
             </div>
@@ -214,7 +214,7 @@
         <!-- 5. Academic Highlights -->
         {% if highlights %}
         <div class="highlights-section">
-            <div class="text-center" style="margin-bottom: 3.5rem;">
+            <div class="text-center section-header-wrap">
                 <span class="section-subtitle">Academic Highlights</span>
                 <h2 class="section-title">Our Learning <span>Approach</span></h2>
             </div>
@@ -241,8 +241,8 @@
         
         <!-- 6. Facilities Section -->
         {% if facilities %}
-        <div class="facilities" style="padding: 4rem 2rem; border-radius: var(--border-radius-lg); margin-bottom: 6rem;">
-            <div class="text-center" style="margin-bottom: 3.5rem;">
+        <div class="facilities facilities-container">
+            <div class="text-center section-header-wrap">
                 <span class="section-subtitle">Our Facilities</span>
                 <h2 class="section-title">Modern & Child-Safe <span>Infrastructure</span></h2>
             </div>
@@ -309,7 +309,7 @@
     </div>
     
     <div class="container events-section-container">
-        <div class="text-center" style="margin-bottom: 2rem;">
+        <div class="text-center section-header-wrap-short">
             <span class="section-subtitle">School Activities</span>
             <h2 class="section-title">Glimpses of <span>Our Adventures</span></h2>
         </div>
@@ -348,7 +348,7 @@
             {% endfor %}
         </div>
         {% else %}
-        <p class="text-center" style="color: var(--color-text-muted); margin-top:3rem;">No upcoming events listed at this time. Check back soon!</p>
+        <p class="text-center list-empty-state">No upcoming events listed at this time. Check back soon!</p>
         {% endif %}
     </div>
 </section>
@@ -366,7 +366,7 @@
     </div>
 
     <div class="container">
-        <div class="text-center" style="margin-bottom: 4rem;">
+        <div class="text-center section-header-wrap-long">
             <span class="section-subtitle">Notices & circulars</span>
             <h2 class="section-title">Important <span>Announcements</span></h2>
         </div>
@@ -426,7 +426,7 @@
             {% endif %}
             
             {% if not pinned_announcements and not regular_announcements %}
-                <p class="text-center" style="color: var(--color-text-muted);">No current announcements or circulars. Check back later.</p>
+                <p class="text-center list-empty-state-no-margin">No current announcements or circulars. Check back later.</p>
             {% endif %}
         </div>
     </div>
@@ -470,7 +470,7 @@
             {% endfor %}
         </div>
         {% else %}
-        <p class="text-center" style="color: var(--color-text-muted); margin-top:3rem;">No media albums created yet. Updates coming soon!</p>
+        <p class="text-center list-empty-state">No media albums created yet. Updates coming soon!</p>
         {% endif %}
     </div>
 </section>
@@ -488,7 +488,7 @@
     </div>
 
     <div class="container">
-        <div class="text-center" style="margin-bottom: 4.5rem;">
+        <div class="text-center section-header-wrap-xl">
             <span class="section-subtitle">Connect With Us</span>
             <h2 class="section-title">We&apos;d Love to <span>Hear From You</span></h2>
         </div>
@@ -524,8 +524,8 @@
                 </div>
                 
                 <div class="contact-social-footer">
-                    <p style="font-size:0.85rem; color: var(--color-lavender); text-transform:uppercase; letter-spacing:1px; margin-bottom:1rem; font-weight:600;">Follow Our Journey</p>
-                    <div class="contact-socials" style="margin-top:0;">
+                    <p class="contact-social-title">Follow Our Journey</p>
+                    <div class="contact-socials contact-socials-footer-list">
                         {% if settings.social_facebook %}
                             <a href="{{ settings.social_facebook }}" class="social-icon-btn" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f"></i></a>
                         {% endif %}
@@ -550,7 +550,7 @@
                 <form action="{% url 'contact_submit' %}" method="POST" class="contact-form" id="contactForm">
                     {% csrf_token %}
                     <!-- Honeypot anti-spam field -->
-                    <div style="display: none;" aria-hidden="true">
+                    <div class="honeypot-field" aria-hidden="true">
                         <label for="id_website_url">Please leave this field blank</label>
                         <input type="text" name="website_url" id="id_website_url" tabindex="-1" autocomplete="off">
                     </div>
@@ -583,7 +583,7 @@
      ========================================== -->
 <section class="map-section">
     <div class="map-container">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d245.89921485490345!2d76.68175227474421!3d9.561830930568789!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b06322e7648bf55%3A0x5d80ee1ac35ede35!2sSt.%20Mary&#39;s%20English%20Medium%20L.P.%20School!5e0!3m2!1sen!2sin!4v1785301870874!5m2!1sen!2sin" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d245.89921485490345!2d76.68175227474421!3d9.561830930568789!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b06322e7648bf55%3A0x5d80ee1ac35ede35!2sSt.%20Mary&#39;s%20English%20Medium%20L.P.%20School!5e0!3m2!1sen!2sin!4v1785301870874!5m2!1sen!2sin" width="100%" height="450" class="map-iframe" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
     </div>
 </section>
 

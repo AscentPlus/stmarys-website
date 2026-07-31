@@ -705,3 +705,39 @@ Disallow: /admin/
 Sitemap: https://stmarysemschool.in/sitemap.xml
 """
     return HttpResponse(content, content_type="text/plain")
+
+
+def llms_view(request):
+    from django.http import HttpResponse
+    settings = WebsiteSetting.load()
+    domain = request.build_absolute_uri('/')
+    
+    content = f"""# {settings.school_name}
+
+## Website URL
+{domain}
+
+## Description
+{settings.school_motto}. A nurturing and caring primary educational institution.
+
+## Primary Content Categories
+- Home
+- About Us (Highlights, Achievements, Facilities)
+- School Activities & Events
+- School Announcements & Circulars
+- Gallery Media Albums
+- Contact Information & Location Map
+
+## Robots Policy
+User-agent: *
+Allow: /
+Disallow: /cms/
+Disallow: /admin/
+
+## Sitemap Location
+{domain}sitemap.xml
+
+## Contact URL
+{domain}#contact
+"""
+    return HttpResponse(content, content_type="text/plain; charset=utf-8")

@@ -4,12 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ settings.school_name }}</title>
+    <title>St. Mary's English Medium LP School | Vazhoor, Kottayam</title>
     <link rel="icon" type="image/png" href="{% static 'images/school_logo.png' %}">
     
-    <!-- Meta Tags for SEO -->
-    <meta name="description" content="Welcome to {{ settings.school_name }}. {{ settings.hero_heading }}. A nurturing and caring Lower Primary educational institution.">
-    <meta name="keywords" content="st. marys, english medium school, lp school, pulickalkavala, vazhoor, school websites">
+    <!-- SEO and Metadata Includes -->
+    {% include 'school/includes/seo_meta.html' %}
+    {% include 'school/includes/social_meta.html' %}
+    {% include 'school/includes/structured_data.html' %}
     
     <!-- Preconnect Origins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -59,8 +60,8 @@
                 {% if settings.logo %}
                     <img src="{{ settings.logo.url }}" alt="{{ settings.school_name }} Logo" class="logo-img">
                 {% else %}
-                    <div class="logo-img" style="background-color: var(--color-accent); display:flex; align-items:center; justify-content:center;">
-                        <i class="fa-solid fa-school" style="color: var(--color-primary); font-size:1.5rem;"></i>
+                    <div class="logo-img logo-img-fallback">
+                        <i class="fa-solid fa-school logo-img-fallback-icon"></i>
                     </div>
                 {% endif %}
                 <div class="logo-text">
@@ -113,7 +114,7 @@
         <div class="container footer-grid">
             <!-- Brand Column -->
             <div class="footer-logo-panel">
-                <div class="logo-text" style="color: var(--color-white); font-weight:700;">
+                <div class="logo-text footer-logo-title">
                     {{ settings.school_name }}
                 </div>
                 <p class="footer-motto">{{ settings.school_motto }}</p>
@@ -165,7 +166,7 @@
         </div>
         <div class="footer-bottom">
             <p>&copy; {% now "Y" %} {{ settings.school_name }}. All Rights Reserved.</p>
-            <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.85; letter-spacing: 0.5px;">Designed by <a href="https://www.ascentplus.net" target="_blank" rel="noopener noreferrer" style="color: var(--color-accent); font-weight: 600; text-decoration: none;">Ascent Plus</a></p>
+            <p class="footer-designed-by">Designed by <a href="https://www.ascentplus.net" target="_blank" rel="noopener noreferrer" class="footer-designer-link">Ascent Plus</a></p>
         </div>
     </footer>
 

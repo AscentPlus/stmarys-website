@@ -57,4 +57,5 @@ urlpatterns = [
     # SEO Paths
     path('sitemap.xml', views.sitemap_view, name='sitemap_xml'),
     path('robots.txt', views.robots_view, name='robots_txt'),
+    path('llms.txt', views.llms_view, name='llms_txt'),
 ]
