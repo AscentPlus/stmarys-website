@@ -4,7 +4,6 @@
    =========================================
 */
 
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
 :root {
     /* Theme Tokens (Aligned with Public site) */
@@ -658,49 +657,165 @@ button.upload-thumb-delete {
 
 /* 
    =========================================
-   CMS Login Screen Specific
+   CMS Login Screen Specific (Public Theme Optimized)
    =========================================
-*/
+ */
+@keyframes float-slow {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(3deg); }
+}
+@keyframes float-medium {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-25px) rotate(-6deg); }
+}
+
 .login-body {
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 50%, var(--color-secondary) 100%);
+    /* Rich, deep public website primary theme colors (Deep purple gradient) */
+    background: linear-gradient(135deg, #1C0A35 0%, #2C1B47 50%, #3F1D63 100%);
     padding: 1.5rem;
     width: 100%;
+    position: relative;
+    overflow: hidden;
 }
+
+/* Background Blobs (Vibrant theme colors on dark background) */
+.login-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.65;
+    z-index: 1;
+    pointer-events: none;
+}
+.lb-purple {
+    width: 450px;
+    height: 450px;
+    background-color: #5C2D91; /* Amethyst Purple */
+    top: -120px;
+    left: -120px;
+    animation: float-slow 12s infinite ease-in-out;
+}
+.lb-gold {
+    width: 500px;
+    height: 500px;
+    background-color: #D4AF37; /* Soft Gold */
+    bottom: -150px;
+    right: -150px;
+    animation: float-medium 15s infinite ease-in-out;
+}
+.lb-red {
+    width: 380px;
+    height: 380px;
+    background-color: #E53935; /* Scarlet Red */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    filter: blur(90px);
+    opacity: 0.35;
+    animation: float-slow 10s infinite ease-in-out;
+}
+
+/* Floating glassmorphic bubbles */
+.login-bubble {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(5px);
+    pointer-events: none;
+    z-index: 2;
+}
+.lbb-1 {
+    width: 90px;
+    height: 90px;
+    top: 15%;
+    left: 10%;
+    animation: float-slow 8s infinite ease-in-out;
+}
+.lbb-2 {
+    width: 130px;
+    height: 130px;
+    bottom: 12%;
+    left: 20%;
+    animation: float-medium 10s infinite ease-in-out;
+}
+.lbb-3 {
+    width: 70px;
+    height: 70px;
+    top: 25%;
+    right: 12%;
+    animation: float-medium 9s infinite ease-in-out;
+}
+.lbb-4 {
+    width: 110px;
+    height: 110px;
+    bottom: 20%;
+    right: 8%;
+    animation: float-slow 11s infinite ease-in-out;
+}
+
 .login-container {
     width: 100%;
-    max-width: 440px;
-    background-color: var(--color-white);
+    max-width: 360px; /* Reduced from 380px */
     border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow-lg);
-    padding: 3rem 2.5rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); /* Premium drop shadow for dark bg */
+    padding: 1.5rem 1.75rem; /* Reduced from 2.2rem 2rem */
     text-align: center;
+    position: relative;
+    z-index: 10;
+    backdrop-filter: blur(8px);
+    background-color: rgba(255, 255, 255, 0.97); /* Frosted, high opacity for readability */
+}
+.login-container .cms-form {
+    gap: 0.75rem; /* Reduced gap between inputs */
+}
+.login-container .form-group {
+    gap: 0.25rem; /* Reduced gap between label and input */
+    align-items: stretch;
+}
+.login-container .form-group label {
+    font-size: 0.8rem; /* Compact label text */
+    margin-bottom: 0.1rem;
+    text-align: left;
+}
+.login-container .form-control {
+    padding: 0.65rem 0.8rem; /* More compact inputs */
+    font-size: 0.9rem;
 }
 .login-logo {
-    width: 72px;
-    height: 72px;
+    width: 52px; /* Reduced from 60px */
+    height: 52px; /* Reduced from 60px */
     border-radius: 50%;
     background-color: var(--color-lavender);
     padding: 4px;
-    margin: 0 auto 1.5rem;
+    margin: 0 auto 0.5rem; /* Reduced from 1rem */
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--color-primary);
-    font-size: 2.2rem;
+    font-size: 1.5rem; /* Reduced from 1.8rem */
+    overflow: hidden;
+    border: 2px solid var(--color-lavender-dark);
+}
+.login-logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
 }
 .login-header h2 {
-    font-size: 1.8rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.35rem; /* Reduced from 1.5rem */
+    margin-bottom: 0.25rem;
     color: var(--color-primary-dark);
 }
 .login-header p {
     color: var(--color-text-muted);
-    font-size: 0.95rem;
-    margin-bottom: 2rem;
+    font-size: 0.85rem; /* Reduced from 0.9rem */
+    margin-bottom: 1rem; /* Reduced from 1.5rem */
 }
 
 /* 

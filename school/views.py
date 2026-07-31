@@ -160,7 +160,7 @@ def cms_login(request):
 def cms_logout(request):
     logout(request)
     messages.success(request, "Logged out successfully.")
-    return redirect('home')
+    return redirect('cms_login')
 
 
 @staff_required

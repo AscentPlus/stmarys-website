@@ -76,6 +76,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
+                'school.context_processors.school_settings',
             ],
         },
     },
@@ -151,7 +152,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 LOGIN_URL = '/cms/login/'
 LOGIN_REDIRECT_URL = '/cms/'
-LOGOUT_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/cms/login/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

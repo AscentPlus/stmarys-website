@@ -2,6 +2,14 @@
 {% load static %}
 {% load humanize %}
 
+{% block extra_head %}
+    {% if settings.hero_bg %}
+        <link rel="preload" as="image" href="{{ settings.hero_bg.url }}" fetchpriority="high">
+    {% else %}
+        <link rel="preload" as="image" href="{% static 'images/hero_default.jpg' %}" fetchpriority="high">
+    {% endif %}
+{% endblock %}
+
 {% block content %}
 
 <!-- ==========================================
@@ -30,7 +38,7 @@
             </div>
             <div class="overlap-card-info">
                 <h3>Our History</h3>
-                <p>Nurturing values and academic milestones for over 25 years.</p>
+                <p>Inspiring characters and academic milestones for over four decades.</p>
             </div>
         </a>
         <a href="#events" class="overlap-card card-scarlet">
@@ -39,7 +47,7 @@
             </div>
             <div class="overlap-card-info">
                 <h3>School Life</h3>
-                <p>A safe, joyful environment built for early play and learning.</p>
+                <p>Creating a safe, joyful environment for learning and creative discovery.</p>
             </div>
         </a>
         <a href="#contact" class="overlap-card card-gold">
@@ -47,8 +55,8 @@
                 <i class="fa-solid fa-graduation-cap"></i>
             </div>
             <div class="overlap-card-info">
-                <h3>For Admission</h3>
-                <p>Open for Grades 1 to 4. Get in touch with us to enroll.</p>
+                <h3>Admissions</h3>
+                <p>Admissions open for Classes 1 to 4. Contact us today to enroll.</p>
             </div>
         </a>
     </div>
@@ -105,8 +113,8 @@
                     {% endif %}
                     
                     <div class="collage-stats-card">
-                        <h4>25+</h4>
-                        <p>Years of Pride</p>
+                        <h4>40+</h4>
+                        <p>Years of Dignity</p>
                     </div>
                 </div>
                 
@@ -179,7 +187,7 @@
             <div class="parallax-overlay">
                 <div class="parallax-content">
                     <h3 class="parallax-title">“{{ about.parallax_text }}”</h3>
-                    <p class="parallax-motto">- {{ settings.school_name }} Philosophy</p>
+                    <p class="parallax-motto">- {{ settings.school_name }}</p>
                 </div>
             </div>
         </div>
@@ -267,21 +275,21 @@
                         <i class="fa-solid fa-shield-halved"></i>
                     </div>
                     <h4 class="why-item-title">Safe & Caring Environment</h4>
-                    <p class="why-item-desc">We maintain 24/7 child-friendly secure monitoring, caring support staff, and verified child-safe facilities.</p>
+                    <p class="why-item-desc">We provide a secure, child-friendly environment, dedicated staff, and certified child-safe facilities</p>
                 </div>
                 <div class="why-item">
                     <div class="why-illustration">
                         <i class="fa-solid fa-seedling"></i>
                     </div>
                     <h4 class="why-item-title">Value-Based Education</h4>
-                    <p class="why-item-desc">Nurturing high emotional intelligence, integrity, gratitude, empathy, and social cooperation in children.</p>
+                    <p class="why-item-desc">Building emotional intelligence, integrity, gratitude, empathy, and social cooperation in children.</p>
                 </div>
                 <div class="why-item">
                     <div class="why-illustration">
                         <i class="fa-solid fa-users-line"></i>
                     </div>
                     <h4 class="why-item-title">Parent-Teacher Synergy</h4>
-                    <p class="why-item-desc">Regular interactive channels and updates that keep parents connected with their child's magical milestones.</p>
+                    <p class="why-item-desc">Stay connected to every milestone through regular updates and interactive communication channels.</p>
                 </div>
             </div>
         </div>

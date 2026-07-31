@@ -6,16 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel Login</title>
     <link rel="icon" type="image/png" href="{% static 'images/school_logo.png' %}">
+    <!-- Preconnect Origins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap">
+
     <!-- Fonts & Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <!-- CMS Stylesheet -->
     <link rel="stylesheet" href="{% static 'css/cms.css' %}">
 </head>
 <body class="login-body">
+    <!-- Background Decorators -->
+    <div class="login-blob lb-purple"></div>
+    <div class="login-blob lb-gold"></div>
+    <div class="login-blob lb-red"></div>
+    
+    <div class="login-bubble lbb-1"></div>
+    <div class="login-bubble lbb-2"></div>
+    <div class="login-bubble lbb-3"></div>
+    <div class="login-bubble lbb-4"></div>
 
     <div class="login-container">
         <div class="login-logo">
-            <i class="fa-solid fa-graduation-cap"></i>
+            {% if settings.logo %}
+                <img src="{{ settings.logo.url }}" alt="School Logo" class="login-logo-img">
+            {% else %}
+                <i class="fa-solid fa-graduation-cap"></i>
+            {% endif %}
         </div>
         
         <div class="login-header">
@@ -25,7 +46,7 @@
         
         {% if messages %}
             {% for message in messages %}
-                <div class="cms-alert cms-alert-danger" style="padding: 0.75rem 1rem; font-size: 0.85rem; margin-bottom: 1.5rem;">
+                <div class="cms-alert cms-alert-danger" style="padding: 0.75rem 1rem; font-size: 0.85rem; margin-bottom: 0.75rem;">
                     <span>{{ message }}</span>
                 </div>
             {% endfor %}
@@ -39,17 +60,17 @@
                 <input type="text" name="username" autofocus maxlength="150" required id="id_username" class="form-control" placeholder="Enter username">
             </div>
             
-            <div class="form-group" style="margin-top: 1rem;">
+            <div class="form-group">
                 <label for="id_password">Password</label>
                 <input type="password" name="password" required id="id_password" class="form-control" placeholder="Enter password">
             </div>
             
-            <button type="submit" class="cms-btn cms-btn-primary" style="width: 100%; justify-content: center; margin-top: 2rem; padding: 0.85rem 1rem;">
+            <button type="submit" class="cms-btn cms-btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem; padding: 0.65rem 1rem;">
                 Access Dashboard <i class="fa-solid fa-arrow-right-to-bracket"></i>
             </button>
         </form>
         
-        <div style="margin-top: 2rem; font-size: 0.85rem;">
+        <div style="margin-top: 1rem; font-size: 0.8rem;">
             <a href="{% url 'home' %}" style="color: var(--color-text-muted);"><i class="fa-solid fa-arrow-left-long"></i> Back to Public Website</a>
         </div>
     </div>
