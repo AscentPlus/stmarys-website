@@ -90,10 +90,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'Escape') closeAllModals();
     });
     
-    // Close modal on clicking overlay bg
+    // Close modal on clicking overlay bg (only if click started and ended on the overlay)
+    let mousedownTarget = null;
     modals.forEach(modal => {
+        modal.addEventListener('mousedown', (e) => {
+            mousedownTarget = e.target;
+        });
         modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeAllModals();
+            if (e.target === modal && mousedownTarget === modal) {
+                closeAllModals();
+            }
         });
     });
 
