@@ -510,14 +510,14 @@
                             <i class="fa-solid fa-phone contact-detail-icon"></i>
                             <div class="contact-detail-text">
                                 <h5>Call Us</h5>
-                                <p>{{ settings.phone }}</p>
+                                <p><a href="tel:{{ settings.phone }}" class="contact-detail-link">{{ settings.phone }}</a></p>
                             </div>
                         </li>
                         <li class="contact-detail-item">
                             <i class="fa-solid fa-envelope contact-detail-icon"></i>
                             <div class="contact-detail-text">
                                 <h5>Send Email</h5>
-                                <p>{{ settings.email }}</p>
+                                <p><a href="mailto:{{ settings.email }}" class="contact-detail-link">{{ settings.email }}</a></p>
                             </div>
                         </li>
                     </ul>

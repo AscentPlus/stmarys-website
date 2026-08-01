@@ -149,17 +149,17 @@
             <div class="footer-contact-panel">
                 <h4 class="footer-title">Contact Us</h4>
                 <ul class="footer-contact-info">
-                    <li class="footer-contact-item">
+                    <li class="footer-contact-item align-start">
                         <i class="fa-solid fa-location-dot footer-contact-icon"></i>
                         <span>{{ settings.address|linebreaksbr }}</span>
                     </li>
                     <li class="footer-contact-item">
                         <i class="fa-solid fa-phone footer-contact-icon"></i>
-                        <span>{{ settings.phone }}</span>
+                        <span><a href="tel:{{ settings.phone }}" class="footer-contact-link">{{ settings.phone }}</a></span>
                     </li>
                     <li class="footer-contact-item">
                         <i class="fa-solid fa-envelope footer-contact-icon"></i>
-                        <span>{{ settings.email }}</span>
+                        <span><a href="mailto:{{ settings.email }}" class="footer-contact-link">{{ settings.email }}</a></span>
                     </li>
                 </ul>
             </div>

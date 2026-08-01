@@ -718,7 +718,7 @@ def llms_view(request):
 {domain}
 
 ## Description
-{settings.school_motto}. A nurturing and caring primary educational institution.
+{settings.school_motto}.
 
 ## Primary Content Categories
 - Home

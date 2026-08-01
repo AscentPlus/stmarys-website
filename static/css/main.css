@@ -1471,6 +1471,14 @@ section {
     word-break: normal;
     overflow-wrap: break-word;
 }
+.contact-detail-link {
+    color: var(--color-white);
+    text-decoration: none;
+    transition: var(--transition-smooth);
+}
+.contact-detail-link:hover {
+    color: var(--color-accent);
+}
 
 .contact-social-footer {
     margin-top: 4rem;
@@ -1654,8 +1662,26 @@ textarea.form-field {
     gap: 0.85rem;
     font-size: 0.95rem;
     color: var(--color-lavender);
+    align-items: center;
+}
+.footer-contact-item.align-start {
+    align-items: flex-start;
 }
 .footer-contact-icon {
+    color: var(--color-accent);
+    flex-shrink: 0;
+    width: 16px;
+    text-align: center;
+}
+.footer-contact-item.align-start .footer-contact-icon {
+    margin-top: 6px;
+}
+.footer-contact-link {
+    color: var(--color-white);
+    text-decoration: none;
+    transition: var(--transition-smooth);
+}
+.footer-contact-link:hover {
     color: var(--color-accent);
 }
 

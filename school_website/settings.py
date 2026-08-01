@@ -61,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'school.middleware.ContentSecurityPolicyMiddleware',
+    'school.middleware.CMSCacheControlMiddleware',
 ]
 
 ROOT_URLCONF = 'school_website.urls'
